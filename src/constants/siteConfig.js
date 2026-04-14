@@ -1,4 +1,11 @@
+// src/constants/siteConfig.js
 export const SITE_INFO = {
+  // 브라우저 탭 및 검색용 정보
+  metadata: {
+    title: "심로그 (Simlog)",
+    tagline: "심심해서 기록하는 일상",
+    description: "배우는 것과 기록하는 것에 진심인 재욱의 개인 블로그입니다.",
+  },
   title: {
     main: "Sim",
     sub: "log",
@@ -13,16 +20,15 @@ export const SITE_INFO = {
     titleSub: "기록하는 일상",
     description: "배우는 것과 기록하는 것에 관심이 아주 많습니다.",
   },
-  // 상단 알림바 설정
   notification: {
     message: "심로그의 새로운 소식을 확인해보세요!",
     buttonText: "자세히 보기",
     url: "/support-us",
   },
-  // 게시물 목록 설정
   recentPosts: {
     title: "최근 게시물",
     readMore: "더 보기",
+    count: 3, // 메인에 보여줄 포스트 개수
   },
   contact: {
     title: "연락처",
