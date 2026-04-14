@@ -1,20 +1,40 @@
 ---
 import slugify from 'slugify';
 import { getAllPosts } from '../utils/getPosts';
+// 1. 설정 파일 불러오기
+import { SITE_INFO } from '../constants/siteConfig';
 
 const posts = await getAllPosts();
 const categories = [...new Set(posts.map(post => post.data.category))];
+
+// 영어 카테고리를 한글로 바꾸는 함수
+const translateCategory = (cat) => {
+  return SITE_INFO.categoryMapping[cat] || cat;
+};
 ---
 
 <ul class="categories">
-  {categories.map((category) => (
-    <li key={category}>
-      <a
-        href={`/${slugify(category).toLowerCase()}`}
-        class="category"
-      >
-        {category}
-      </a>
-    </li>
-  ))}
+  {/* 상단에 'CATEGORIES' 대신 설정해둔 한글 제목 사용 가능 */}
+  {categories.map((category) => {
+    const koreanName = translateCategory(category); // 한글로 변신!
+    
+    return (
+      <li key={category}>
+        <a
+          href={`/${slugify(category).toLowerCase()}`}
+          class="category"
+          style="text-transform: none !important;" 
+        >
+          {koreanName}
+        </a>
+      </li>
+    );
+  })}
 </ul>
+
+<style>
+  /* 대문자 강제 변환을 막기 위해 추가 */
+  .category {
+    text-transform: none !important;
+  }
+</style>
