@@ -1,6 +1,7 @@
 import React from 'react'
 import Links from '../constants/links'
 import { IoMdClose } from 'react-icons/io'
+import { SITE_INFO } from '../constants/siteConfig'
 import '../css/mobile-menu.css'
 
 const MobileMenu = ({ isOpen, toggle }) => {
@@ -16,9 +17,9 @@ const MobileMenu = ({ isOpen, toggle }) => {
             className="support-us-link not-blue"
             target="_blank"
             rel="noreferrer noopener"
-            href="/support-us"
+            href={SITE_INFO.navButton.url}
           >
-            Support Us
+            {SITE_INFO.navButton.text}
           </a>
         </div>
       </aside>
