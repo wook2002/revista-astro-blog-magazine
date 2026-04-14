@@ -12,16 +12,14 @@ export interface Category {
 }
 
 export const categories: Category[] = [
-  { category: 'Art', color: '#ffb8b0' },
-  { category: 'Business', color: '#fdffba' },
-  { category: 'Creativity', color: '#b7ffff' },
-  { category: 'Health', color: '#ffd6c5' },
-  { category: 'History', color: '#ffffca' },
-  { category: 'Philosophy', color: '#ffcdf8' },
-  { category: 'Psychology', color: '#ceebff' },
-  { category: 'Science', color: '#ffc7d6' },
-  { category: 'Technology', color: '#c4ffd4' },
-  { category: 'All Categories', color: '#c9c4ff' },
+  { category: '가족', color: '#ffb8b0' },
+  { category: '공부', color: '#fdffba' },
+  { category: '일상', color: '#b7ffff' },
+  { category: '생각', color: '#ffd6c5' },
+  { category: '개발', color: '#ffffca' },
+  { category: '취미', color: '#ffcdf8' },
+  // ... 원하는 만큼 수정/추가 하세요!
+  { category: '전체 보기', color: '#c9c4ff' },
 ];
 
 /**
