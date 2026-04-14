@@ -1,66 +1,46 @@
 ---
-import slugify from 'slugify';
+import { getColor } from '../../utils/heroCategories';
 import { resolveImagePath } from '../../utils/imagePath';
-import { normalizePostData, getCategoryUrl } from '../../utils/postHelpers';
-import { formatDateShort } from '../../utils/formatDate';
+import { normalizePostData } from '../../utils/postHelpers';
 import type { Post } from '../../utils/getPosts';
+// 설정 파일 불러오기
+import { SITE_INFO } from '../../constants/siteConfig';
 
 interface Props {
   posts?: Post[];
 }
 
 const { posts = [] } = Astro.props;
-const trendingPosts = posts.slice(0, 3);
 ---
 
 <div class="col-md-4 col-12">
-  <h2 class="section-title trending-title">Trending</h2>
+  <h2 class="section-title">{SITE_INFO.featured.trendingTitle}</h2>
+  
+  <div class="trending-posts">
+    {posts.map((post) => {
+      const normalized = normalizePostData(post);
+      const categoryColor = getColor(post.data.category);
 
-  {trendingPosts.map(post => {
-    const normalized = normalizePostData(post);
-    const imageSrc = resolveImagePath(post.data.image);
-
-    return (
-      <article
-        key={post.id}
-        class="card card-body card-bg card-shadow trending-card"
-      >
-        <a href={normalized.url}>
-          {imageSrc && (
-            <img
-              src={imageSrc}
-              alt={normalized.title}
-              class="trending-img"
-              style="width: 100px; height: 100px; object-fit: cover;"
-            />
-          )}
-        </a>
-
-        <div class="trending-meta">
-          <a href={normalized.url}>
-            <h3>{normalized.title}</h3>
-          </a>
-
-          <ul class="card-meta list-inline">
-            <li class="list-inline-item">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg>
-              {normalized.readingTime} Min Read
-            </li>
-            <li class="list-inline-item">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-              </svg>
-              {normalized.dateShort}
-            </li>
-          </ul>
-        </div>
-      </article>
-    );
-  })}
+      return (
+        <article key={post.id} class="trending-item card-bg card-shadow">
+          <div class="card-body">
+            <a href={normalized.url} class="category-link" style={`color: ${categoryColor};`}>
+              {normalized.category}
+            </a>
+            <a href={normalized.url}>
+              <h3 class="trending-heading">{normalized.title}</h3>
+            </a>
+            <ul class="card-meta list-inline">
+              <li class="list-inline-item">
+                {normalized.readingTime} {SITE_INFO.posts.readingTime}
+              </li>
+              <li class="list-inline-item">
+                {normalized.dateShort}
+              </li>
+            </ul>
+          </div>
+        </article>
+      );
+    })}
+  </div>
 </div>
