@@ -5,6 +5,8 @@ import Featured from '../components/featured/Featured.astro';
 import Notification from '../components/Notification.astro';
 import RecentPosts from '../components/RecentPosts.astro';
 import { getAllPosts } from '../utils/getPosts';
+// 1. 설정 파일 불러오기
+import { SITE_INFO } from '../constants/siteConfig';
 
 const allPosts = await getAllPosts();
 const sortedPosts = allPosts.sort((a, b) => {
@@ -15,19 +17,13 @@ const topPickPosts = sortedPosts.filter(post => post.data.topPick);
 const trendingPosts = sortedPosts.filter(post => post.data.trending);
 const popularPosts = sortedPosts.filter(post => post.data.popular);
 
-const recentPosts = sortedPosts.slice(0, 3);
-
-const siteMetadata = {
-  title: '재욱',
-  description: '설명테스트 데스크립션!! ',
-  url: import.meta.env.SITE || 'https://yourdomain.com',
-  image: '/logo.png',
-};
+// 2. 보여줄 포스트 개수를 설정 파일에서 가져오기
+const recentPosts = sortedPosts.slice(0, SITE_INFO.recentPosts.count);
 ---
 
 <BaseLayout 
-  title={`${siteMetadata.title} | 사이트메타데이터타이틀`}
-  description={siteMetadata.description}
+  title={`${SITE_INFO.metadata.title} | ${SITE_INFO.metadata.tagline}`}
+  description={SITE_INFO.metadata.description}
 >
   <Hero />
   <Featured 
