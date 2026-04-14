@@ -114,5 +114,13 @@ export const SITE_INFO = {
     "Technology": "기술",
     "Meta": "메타",
     // 앞으로 쓸 글이 영문이어도 여기서 한글로 매칭 가능!
-  }
+  },
+  // siteConfig.js 의 footer 부분 수정
+  footer: {
+    copyrightHolder: "Simlog",
+    startYear: "2026",
+    privacyPolicy: "개인정보처리방침", // 추가
+    termsAndConditions: "이용약관",     // 추가
+    allRightsReserved: "All rights reserved.", // 이건 영어가 멋있으면 그대로, 아니면 "모든 권리 보유"
+  },
 };
