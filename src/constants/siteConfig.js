@@ -38,5 +38,19 @@ export const SITE_INFO = {
   footer: {
     copyrightHolder: "Simlog",
     startYear: "2024",
+  },
+  // 상단 메뉴 설정
+  navLinks: [
+    { text: "홈", url: "/" },
+    { text: "소개", url: "/about" },
+    { text: "카테고리", url: "/categories" },
+    { text: "문의", url: "/contact" },
+  ],
+
+  // 카테고리 섹션 제목 (Featured 섹션용)
+  featured: {
+    topTitle: "추천 포스트",
+    trendingTitle: "인기 급상승",
+    popularTitle: "가장 많이 본",
   }
 };
