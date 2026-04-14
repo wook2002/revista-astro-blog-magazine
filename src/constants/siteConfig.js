@@ -62,5 +62,9 @@ export const SITE_INFO = {
     { category: '개발', color: '#ffffca' },
     { category: '취미', color: '#ffcdf8' },
     { category: '전체 보기', color: '#c9c4ff' },
-  ]
+  ],
+  // siteConfig.js 에 추가 (이미 있으면 패스!)
+  posts: {
+    readingTime: "분 읽기",
+  }
 };
