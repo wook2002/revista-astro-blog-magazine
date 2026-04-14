@@ -13,6 +13,17 @@ export const SITE_INFO = {
     titleSub: "기록하는 일상",
     description: "배우는 것과 기록하는 것에 관심이 아주 많습니다.",
   },
+  // 상단 알림바 설정
+  notification: {
+    message: "심로그의 새로운 소식을 확인해보세요!",
+    buttonText: "자세히 보기",
+    url: "/support-us",
+  },
+  // 게시물 목록 설정
+  recentPosts: {
+    title: "최근 게시물",
+    readMore: "더 보기",
+  },
   contact: {
     title: "연락처",
     subtitle: "궁금한 점이 있으신가요? 메시지를 남겨주시면 최대한 빨리 답변해 드릴게요.",
