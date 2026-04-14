@@ -5,6 +5,8 @@ import { resolveImagePath } from '../../utils/imagePath';
 import { normalizePostData, getCategoryUrl } from '../../utils/postHelpers';
 import { formatDateShort } from '../../utils/formatDate';
 import type { Post } from '../../utils/getPosts';
+// 1. 설정 파일 불러오기
+import { SITE_INFO } from '../../constants/siteConfig';
 
 interface Props {
   posts?: Post[];
@@ -15,7 +17,8 @@ const topPost = posts[0];
 ---
 
 <div class="col-md-4 col-12">
-  <h2 class="section-title">Top Article</h2>
+  {/* 2. 섹션 제목 연결 */}
+  <h2 class="section-title">{SITE_INFO.featured.topTitle}</h2>
 
   {topPost ? (() => {
     const normalized = normalizePostData(topPost);
@@ -46,7 +49,8 @@ const topPost = posts[0];
                 <circle cx="12" cy="12" r="10"></circle>
                 <polyline points="12 6 12 12 16 14"></polyline>
               </svg>
-              {normalized.readingTime} Min Read
+              {/* 3. 읽기 시간 단위 연결 */}
+              {normalized.readingTime} {SITE_INFO.posts.readingTime}
             </li>
             <li class="list-inline-item">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -71,7 +75,8 @@ const topPost = posts[0];
             <p class="excerpt">{normalized.excerpt}</p>
           </a>
           <a class="btn btn-outline-primary" href={normalized.url}>
-            Read More
+            {/* 4. 더 보기 버튼 연결 */}
+            {SITE_INFO.recentPosts.readMore}
           </a>
         </div>
       </article>
