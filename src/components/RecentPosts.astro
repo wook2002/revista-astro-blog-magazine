@@ -5,6 +5,7 @@ import { resolveImagePath } from '../utils/imagePath';
 import { normalizePostData, getCategoryUrl } from '../utils/postHelpers';
 import { formatDateLong } from '../utils/formatDate';
 import type { Post } from '../utils/getPosts';
+import { SITE_INFO } from '../constants/siteConfig';
 
 interface Props {
   posts?: Post[];
@@ -16,7 +17,7 @@ const { posts = [] } = Astro.props;
 <section class="container">
   <div class="row">
     <div class="col-lg-8 col-12">
-      <h2 class="section-title">Recent Articles</h2>
+      <h2 class="section-title">{SITE_INFO.recentPosts.title}</h2>
 
       {posts.map(post => {
         const normalized = normalizePostData(post);
@@ -24,19 +25,9 @@ const { posts = [] } = Astro.props;
         const categoryColor = getColor(post.data.category);
 
         return (
-          <article
-            key={post.id}
-            class="card card-bg card-shadow recent-article-mb"
-          >
+          <article key={post.id} class="card card-bg card-shadow recent-article-mb">
             <a href={normalized.url}>
-              {imageSrc && (
-                <img
-                  src={imageSrc}
-                  alt={normalized.title}
-                  class="img"
-                  style="width: 100%; height: auto;"
-                />
-              )}
+              {imageSrc && <img src={imageSrc} alt={normalized.title} class="img" style="width: 100%; height: auto;" />}
             </a>
 
             <div class="card-body">
@@ -62,14 +53,8 @@ const { posts = [] } = Astro.props;
                   {normalized.dateLong}
                 </li>
                 <li class="list-inline-item">
-                  <a
-                    href={normalized.categoryUrl}
-                    class="category-link"
-                    style={`color: ${categoryColor}; background-color: ${categoryColor};`}
-                  >
-                    <div class="category-text-color">
-                      {normalized.category}
-                    </div>
+                  <a href={normalized.categoryUrl} class="category-link" style={`color: ${categoryColor}; background-color: ${categoryColor};`}>
+                    <div class="category-text-color">{normalized.category}</div>
                   </a>
                 </li>
               </ul>
@@ -77,7 +62,7 @@ const { posts = [] } = Astro.props;
                 <p class="excerpt">{normalized.excerpt}</p>
               </a>
               <a class="btn btn-outline-primary" href={normalized.url}>
-                Read More
+                {SITE_INFO.recentPosts.readMore}
               </a>
             </div>
           </article>
