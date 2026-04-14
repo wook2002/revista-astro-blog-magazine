@@ -15,7 +15,7 @@ const Navbar = ({ toggle }) => {
               <img src={logo.src} alt="Revista Logo" width="100" height="100" />
               <div className="logo-text">
                 <span className="nav-word-open">네브</span>
-                <span className="nav-word-ed">바</span>
+                <span className="nav-word-ed">바1</span>
               </div>
             </a>
 
