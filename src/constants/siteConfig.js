@@ -52,5 +52,15 @@ export const SITE_INFO = {
     topTitle: "추천 포스트",
     trendingTitle: "인기 급상승",
     popularTitle: "가장 많이 본",
-  }
+  },
+  // 메인 화면 히어로 섹션에 보여줄 카테고리들
+  heroCategories: [
+    { category: '가족', color: '#ffb8b0' },
+    { category: '공부', color: '#fdffba' },
+    { category: '일상', color: '#b7ffff' },
+    { category: '생각', color: '#ffd6c5' },
+    { category: '개발', color: '#ffffca' },
+    { category: '취미', color: '#ffcdf8' },
+    { category: '전체 보기', color: '#c9c4ff' },
+  ]
 };
