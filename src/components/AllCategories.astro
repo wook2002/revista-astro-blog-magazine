@@ -4,6 +4,8 @@ import slugify from 'slugify';
 import { getColor } from '../utils/heroCategories';
 import { getAllPosts } from '../utils/getPosts';
 import undrawChoice from '../assets/undraw_choice.svg';
+// 1. 설정 파일 불러오기
+import { SITE_INFO } from '../constants/siteConfig';
 
 const posts = await getAllPosts();
 const allCategories = [...new Set(posts.map(post => post.data.category))].sort();
@@ -13,7 +15,8 @@ const allCategories = [...new Set(posts.map(post => post.data.category))].sort()
   <div class="container categories-page">
     <div class="row">
       <div class="col-md-6">
-        <h1 class="section-title categories-title">All Categories</h1>
+        {/* 2. 제목을 설정값으로 변경 */}
+        <h1 class="section-title categories-title">{SITE_INFO.labels.categoryPage}</h1>
         <div class="categories-list col-12">
           {allCategories.map((category, index) => {
             const color = getColor(category);
@@ -36,7 +39,8 @@ const allCategories = [...new Set(posts.map(post => post.data.category))].sort()
       <div class="col-12 col-md-6 all-categories-img">
         <Image
           src={undrawChoice}
-          alt="Open Source Illustration"
+          {/* 3. 이미지 설명도 사이트 이름으로 변경 */}
+          alt={`${SITE_INFO.metadata.title} 카테고리 일러스트`}
           class="all-categories-img"
         />
       </div>
@@ -45,50 +49,12 @@ const allCategories = [...new Set(posts.map(post => post.data.category))].sort()
 </section>
 
 <style>
-  .all-categories-wrapper .categories-page {
-    margin-top: 5rem;
-    margin-bottom: 5rem;
-  }
-
-  .all-categories-wrapper .categories-page h1 {
-    margin-bottom: 4rem;
-    font-size: 180%;
-  }
-
-  .all-categories-wrapper .item {
-    display: flex;
-    align-items: center;
-    font-size: 120%;
-    text-decoration: none;
-  }
-
-  .all-categories-wrapper .category {
-    margin: 1rem 1rem;
-    display: flex;
-    align-items: center;
-  }
-  
-  .all-categories-wrapper .category-color {
-    width: 30px;
-    height: 30px;
-    background-color: #bbb;
-    border-radius: 50%;
-    display: inline-block;
-    padding: 10px;
-  }
-
-  .all-categories-wrapper .all-categories-img {
-    align-self: center;
-    padding: 5rem;
-    max-width: 100%;
-    height: auto;
-  }
-
-  @media screen and (max-width: 767px) {
-    .all-categories-wrapper .item {
-      margin-bottom: 1rem;
-      width: 50%;
-      display: inline-flex;
-    }
-  }
+  /* 스타일 코드는 기존과 동일하므로 생략 (기존 스타일 유지) */
+  .all-categories-wrapper .categories-page { margin-top: 5rem; margin-bottom: 5rem; }
+  .all-categories-wrapper .categories-page h1 { margin-bottom: 4rem; font-size: 180%; }
+  .all-categories-wrapper .item { display: flex; align-items: center; font-size: 120%; text-decoration: none; }
+  .all-categories-wrapper .category { margin: 1rem 1rem; display: flex; align-items: center; }
+  .all-categories-wrapper .category-color { width: 30px; height: 30px; background-color: #bbb; border-radius: 50%; display: inline-block; padding: 10px; }
+  .all-categories-wrapper .all-categories-img { align-self: center; padding: 5rem; max-width: 100%; height: auto; }
+  @media screen and (max-width: 767px) { .all-categories-wrapper .item { margin-bottom: 1rem; width: 50%; display: inline-flex; } }
 </style>
