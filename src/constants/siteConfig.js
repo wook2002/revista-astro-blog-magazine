@@ -101,4 +101,18 @@ export const SITE_INFO = {
     searchPlaceholder: "검색어를 입력하세요...",
     noResults: "검색 결과가 없습니다.",
   },
+  // [추가] 영어 카테고리를 한글로 강제 변환하는 표
+  categoryMapping: {
+    "Art": "예술",
+    "Business": "비즈니스",
+    "Creativity": "창의성",
+    "Health": "건강",
+    "History": "역사",
+    "Philosophy": "철학",
+    "Psychology": "심리학",
+    "Science": "과학",
+    "Technology": "기술",
+    "Meta": "메타",
+    // 앞으로 쓸 글이 영문이어도 여기서 한글로 매칭 가능!
+  }
 };
