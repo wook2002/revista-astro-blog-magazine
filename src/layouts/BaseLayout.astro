@@ -5,7 +5,6 @@ import '../css/pages.scss';
 import '../css/components.scss';
 import NavbarWrapper from '../components/NavbarWrapper';
 import Footer from '../components/Footer.astro';
-// 1. 설정 파일 불러오기
 import { SITE_INFO } from '../constants/siteConfig';
 
 interface Props {
@@ -18,11 +17,9 @@ interface Props {
 
 const { title, description, image, article, structuredData } = Astro.props;
 
-// 2. 하드코딩된 정보를 SITE_INFO 기반으로 변경
 const siteMetadata = {
   title: SITE_INFO.metadata.title,
   description: SITE_INFO.metadata.description,
-  // 실제 배포 주소로 변경
   url: import.meta.env.SITE || 'https://simlog.pages.dev', 
   defaultImage: SITE_INFO.metadata.ogImage,
   twitterUsername: '',
@@ -35,7 +32,6 @@ const pageUrl = `${siteMetadata.url}${Astro.url.pathname}`;
 ---
 
 <!DOCTYPE html>
-{/* 3. 언어 설정을 한국어(ko)로 변경 */}
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
@@ -43,12 +39,27 @@ const pageUrl = `${siteMetadata.url}${Astro.url.pathname}`;
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     
     <title>{pageTitle}</title>
-    {/* 검색 엔진 차단 (이건 Astro 주석이라 화면에 안 나옵니다) */}
     <meta name="robots" content="noindex, nofollow" />
     <meta name="googlebot" content="noindex, nofollow" />
 
     <meta name="description" content={pageDescription} />
     <meta name="image" content={pageImage} />
+
+    {/* ✅ [긴급 수술] 0.4초 깜빡임 방지용 CSS 핵 */}
+    <style is:inline>
+      /* 모든 로딩 애니메이션과 프리로더 강제 종료 */
+      #preloader, .preloader, .loader, #st-preloader { 
+        display: none !important; 
+        visibility: hidden !important; 
+        opacity: 0 !important; 
+      }
+      /* 화면이 하얗게 떴다가 나타나는 현상 방지 */
+      body { 
+        opacity: 1 !important; 
+        visibility: visible !important; 
+        display: block !important;
+      }
+    </style>
     
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -57,7 +68,6 @@ const pageUrl = `${siteMetadata.url}${Astro.url.pathname}`;
       rel="stylesheet"
     />
     
-    {/* 4. SNS 공유용 메타태그(OG Tag) 설정 */}
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
     <meta property="og:image" content={pageImage} />
@@ -67,33 +77,9 @@ const pageUrl = `${siteMetadata.url}${Astro.url.pathname}`;
     <meta property="og:locale" content="ko_KR" />
     
     <meta name="twitter:card" content="summary_large_image" />
-    {siteMetadata.twitterUsername && (
-      <meta name="twitter:creator" content={siteMetadata.twitterUsername} />
-    )}
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={pageDescription} />
     <meta name="twitter:image" content={pageImage} />
-    
-    {structuredData ? (
-      <>
-        {Array.isArray(structuredData) ? (
-          structuredData.map((data) => (
-            <script type="application/ld+json" set:html={JSON.stringify(data)} />
-          ))
-        ) : (
-          <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
-        )}
-      </>
-    ) : (
-      <script type="application/ld+json" set:html={JSON.stringify({
-        "@context": "https://schema.org/",
-        "@type": "Organization",
-        "description": siteMetadata.description,
-        "url": siteMetadata.url,
-        "homepage": siteMetadata.url,
-        "name": siteMetadata.title
-      })} />
-    )}
     
     <link rel="canonical" href={pageUrl} />
   </head>
