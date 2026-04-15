@@ -8,7 +8,6 @@ import { resolveImagePath } from '../../utils/imagePath';
 import { formatDateLong } from '../../utils/formatDate';
 import { calculateReadingTime, getCategoryUrl } from '../../utils/postHelpers';
 import type { Post } from '../../utils/getPosts';
-// 1. 설정 파일 불러오기
 import { SITE_INFO } from '../../constants/siteConfig';
 
 interface Props {
@@ -43,7 +42,6 @@ if (!post.render) {
 const renderResult = await post.render();
 const { Content } = renderResult;
 
-// 카테고리 한글 변환 도우미
 const translateCategory = (cat: string) => SITE_INFO.categoryMapping[cat] || cat;
 
 const dateFormatted = formatDateLong(post.data.date);
@@ -61,7 +59,6 @@ const siteMetadata = {
 const postUrl = `${siteMetadata.url}${Astro.url.pathname}`;
 const fullImageSrc = imageSrc ? (imageSrc.startsWith('http') ? imageSrc : `${siteMetadata.url}${imageSrc}`) : undefined;
 
-// Structured data
 const articleStructuredData = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
@@ -88,7 +85,6 @@ const articleStructuredData = {
   "timeRequired": `PT${Math.ceil(readingTimeMinutes)}M`
 };
 
-// Breadcrumb (홈 > 카테고리 > 글제목) 한글화
 const breadcrumbStructuredData = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -96,7 +92,7 @@ const breadcrumbStructuredData = {
     {
       "@type": "ListItem",
       "position": 1,
-      "name": SITE_INFO.navLinks[0].text, // "홈"
+      "name": SITE_INFO.navLinks[0].text,
       "item": siteMetadata.url
     },
     {
@@ -147,7 +143,6 @@ const structuredData = [articleStructuredData, breadcrumbStructuredData];
                   <circle cx="12" cy="12" r="10"></circle>
                   <polyline points="12 6 12 12 16 14"></polyline>
                 </svg>
-                {/* 읽기 시간 한글화 */}
                 {readingTimeMinutes} {SITE_INFO.posts.readingTime}
               </li>
               <li class="list-inline-item">
@@ -181,4 +176,18 @@ const structuredData = [articleStructuredData, breadcrumbStructuredData];
                   class="category-link"
                   style={`color: ${categoryColor}; background-color: ${categoryColor}; text-transform: none;`}
                 >
-                  {/* 카테고
+                  <div class="category-text-color">{koreanCategory}</div>
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="article-body">
+            <Content />
+          </div>
+        </article>
+      </div>
+      <Sidebar />
+    </div>
+  </section>
+</BaseLayout>
