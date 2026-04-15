@@ -2,10 +2,10 @@ export const SITE_INFO = {
   // 1. 브라우저 탭 및 검색 엔진 설정 (SEO)
   metadata: {
     title: "심로그 (Simlog)",
-    tagline: "심심해서 기록하는 일상",
-    description: "배우는 것과 기록하는 것에 진심인 재욱의 개인 블로그입니다.",
+    tagline: "일상.", // ✅ 심플하게 변경
+    description: "기록의 가치를 담는 재욱의 개인 블로그입니다.",
     favicon: "/favicon.ico", 
-    ogImage: "/logo.png",     
+    ogImage: "/logo.png",      
   },
 
   // 2. 로고 및 기본 타이틀
@@ -28,10 +28,10 @@ export const SITE_INFO = {
 
   // 4. 메인 화면 구성 (Hero & 알림)
   hero: {
-    eyebrow: "기록 저장소",
-    titleMain: "심심해서",
-    titleSub: "기록하는 일상",
-    description: "배우는 것과 기록하는 것에 관심이 아주 많습니다.",
+    eyebrow: "기록.", // ✅ 두 글자로 통일
+    titleMain: "일상.", // ✅ 재욱님 픽!
+    titleSub: "",      // ✅ 서브 타이틀은 비워둬서 난잡함 제거
+    description: "배우고 기록하는 일들을 담아냅니다.", 
   },
   notification: {
     message: "심로그의 새로운 소식을 확인해보세요!",
@@ -44,7 +44,7 @@ export const SITE_INFO = {
     readingTime: "분 읽기",
   },
   recentPosts: {
-    title: "최근 게시물",
+    title: "최근 기록", // ✅ '게시물'보다 '기록'이 더 느낌 있네요
     readMore: "더 보기",
     count: 3, 
   },
@@ -66,12 +66,12 @@ export const SITE_INFO = {
   // 6. 페이지별 상세 문구
   contact: {
     title: "연락처",
-    subtitle: "궁금한 점이 있으신가요? 메시지를 남겨주시면 최대한 빨리 답변해 드릴게요.",
-    successMsg: "메시지가 성공적으로 전송되었습니다! 곧 연락드릴게요.",
+    subtitle: "메시지를 남겨주시면 최대한 빨리 답변해 드릴게요.",
+    successMsg: "메시지가 성공적으로 전송되었습니다!",
     placeholders: {
-      name: "성함 (Name)",
-      email: "이메일 주소 (Email)",
-      message: "메시지를 입력하세요 (Message)",
+      name: "성함",
+      email: "이메일",
+      message: "메시지",
       button: "보내기",
     }
   },
@@ -82,18 +82,21 @@ export const SITE_INFO = {
   },
   support: {
     title: "저희 가족을 소개합니다",
-    message: "심로그를 방문해 주셔서 감사합니다. 여기는 저희 가족의 작은 기록 공간입니다.",
+    message: "심로그를 방문해 주셔서 감사합니다.",
   },
 
   // 7. 푸터 및 SNS 정보
   footer: {
     copyrightHolder: "Simlog",
     startYear: "2026",
+    privacyPolicy: "개인정보처리방침",
+    termsAndConditions: "이용약관",
+    allRightsReserved: "All rights reserved.",
   },
   social: {
     github: "https://github.com/wook2002",
-    instagram: "https://instagram.com/your_id", // 실제 아이디로 수정
-    email: "mailto:your_email@naver.com",       // 실제 이메일로 수정
+    instagram: "https://instagram.com/your_id", 
+    email: "mailto:your_email@naver.com",       
   },
   labels: {
     categoryPage: "카테고리 별 모아보기",
@@ -101,7 +104,6 @@ export const SITE_INFO = {
     searchPlaceholder: "검색어를 입력하세요...",
     noResults: "검색 결과가 없습니다.",
   },
-  // [추가] 영어 카테고리를 한글로 강제 변환하는 표
   categoryMapping: {
     "Art": "예술",
     "Business": "비즈니스",
@@ -113,14 +115,5 @@ export const SITE_INFO = {
     "Science": "과학",
     "Technology": "기술",
     "Meta": "메타",
-    // 앞으로 쓸 글이 영문이어도 여기서 한글로 매칭 가능!
-  },
-  // siteConfig.js 의 footer 부분 수정
-  footer: {
-    copyrightHolder: "Simlog",
-    startYear: "2026",
-    privacyPolicy: "개인정보처리방침", // 추가
-    termsAndConditions: "이용약관",     // 추가
-    allRightsReserved: "All rights reserved.", // 이건 영어가 멋있으면 그대로, 아니면 "모든 권리 보유"
   },
 };
