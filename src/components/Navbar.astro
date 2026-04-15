@@ -1,0 +1,86 @@
+---
+// [src/components/Navbar.astro]
+import { SITE_INFO } from '../constants/siteConfig';
+import logo from '../assets/logo.png';
+import heart from '../assets/heart.png';
+
+// 카테고리 등 필요한 데이터 준비
+const { navLinks, title, navButton } = SITE_INFO;
+---
+
+<header class="navbar-wrapper">
+  <nav class="navbar">
+    <div class="nav-center">
+      <div class="nav-header">
+        <a href="/" class="nav-logo not-blue">
+          <img src={logo.src} alt={`${title.main}${title.sub} 로고`} width="100" height="100" />
+          <div class="logo-text">
+            <span class="nav-word-open">{title.main}</span>
+            <span class="nav-word-ed">{title.sub}</span>
+          </div>
+        </a>
+        <button class="toggle-btn" aria-label="메뉴 열기" id="menu-toggle">
+          <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+            <path d="M32 96v64h448V96H32zm0 128v64h448v-64H32zm0 128v64h448v-64H32z"></path>
+          </svg>
+        </button>
+      </div>
+
+      <ul class="nav-links">
+        {navLinks.map((link) => (
+          <li>
+            <a href={link.url} class="page-link">{link.text}</a>
+          </li>
+        ))}
+      </ul>
+
+      <a class="support-us-link not-blue" href={navButton.url}>
+        <img src={heart.src} alt="" class="support-heart" width="19" height="19" />
+        {navButton.text}
+      </a>
+    </div>
+  </nav>
+
+  <aside class="mobile-menu" id="mobile-menu">
+    <div class="sidebar-container">
+      <button class="close-btn" id="menu-close">
+        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+          <path d="M405 136.798L375.202 107 256 226.202 136.798 107 107 136.798 226.202 256 107 375.202 136.798 405 256 285.798 375.202 405 405 375.202 285.798 256z"></path>
+        </svg>
+      </button>
+      <ul class="sidebar-links">
+        {navLinks.map((link) => (
+          <li><a href={link.url}>{link.text}</a></li>
+        ))}
+        <li><a href={navButton.url} class="support-us-link">{navButton.text}</a></li>
+      </ul>
+    </div>
+  </aside>
+</header>
+
+<script>
+  // 멋드러진 모바일 메뉴 작동 스크립트 (바닐라 JS)
+  const toggleBtn = document.getElementById('menu-toggle');
+  const closeBtn = document.getElementById('menu-close');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  toggleBtn?.addEventListener('click', () => {
+    mobileMenu?.classList.add('show-sidebar');
+  });
+
+  closeBtn?.addEventListener('click', () => {
+    mobileMenu?.classList.remove('show-sidebar');
+  });
+</script>
+
+<style>
+  /* 필요한 스타일만 최소한으로 유지 (기존 CSS와 연결됨) */
+  .mobile-menu {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: white; z-index: -1; opacity: 0; visibility: hidden;
+    transition: all 0.3s linear; transform: translateX(-100%);
+  }
+  .show-sidebar {
+    opacity: 1; visibility: visible; transform: translateX(0); z-index: 999;
+  }
+</style>
