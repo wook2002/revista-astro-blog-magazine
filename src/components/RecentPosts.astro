@@ -1,74 +1,133 @@
 ---
-import SidebarWide from './Sidebar/SidebarWide.astro';
+// [src/components/RecentPosts.astro]
+import Sidebar from './Sidebar/Sidebar.astro'; // ✅ SidebarWide 대신 Sidebar 사용
 import { getColor } from '../utils/heroCategories';
 import { resolveImagePath } from '../utils/imagePath';
-import { normalizePostData, getCategoryUrl } from '../utils/postHelpers';
-import { formatDateLong } from '../utils/formatDate';
-import type { Post } from '../utils/getPosts';
+import { normalizePostData } from '../utils/postHelpers';
 import { SITE_INFO } from '../constants/siteConfig';
 
 interface Props {
-  posts?: Post[];
+  posts?: any[];
 }
 
 const { posts = [] } = Astro.props;
 ---
 
-<section class="container">
-  <div class="row">
-    <div class="col-lg-8 col-12">
-      <h2 class="section-title">{SITE_INFO.recentPosts.title}</h2>
+<section class="recent-posts-section">
+  <div class="container">
+    <div class="row">
+      {/* 1. 메인 글 목록 영역 */}
+      <div class="col-lg-8 col-12">
+        <div class="section-header">
+          <h2 class="section-title">{SITE_INFO.recentPosts.title}</h2>
+          <div class="title-line"></div>
+        </div>
 
-      {posts.map(post => {
-        const normalized = normalizePostData(post);
-        const imageSrc = resolveImagePath(post.data.image);
-        const categoryColor = getColor(post.data.category);
+        <div class="posts-grid">
+          {posts.map(post => {
+            const normalized = normalizePostData(post);
+            const imageSrc = resolveImagePath(post.data.image);
+            const categoryColor = getColor(post.data.category);
+            const categoryName = SITE_INFO.categoryMapping[normalized.category] || normalized.category;
 
-        return (
-          <article key={post.id} class="card card-bg card-shadow recent-article-mb">
-            <a href={normalized.url}>
-              {imageSrc && <img src={imageSrc} alt={normalized.title} class="img" style="width: 100%; height: auto;" />}
-            </a>
-
-            <div class="card-body">
-              <a href={normalized.url}>
-                <h3 class="recent-articles-heading">{normalized.title}</h3>
-              </a>
-
-              <ul class="card-meta list-inline">
-                <li class="list-inline-item">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                  </svg>
-                  {normalized.readingTime} Min Read
-                </li>
-                <li class="list-inline-item">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                  </svg>
-                  {normalized.dateLong}
-                </li>
-                <li class="list-inline-item">
-                  <a href={normalized.categoryUrl} class="category-link" style={`color: ${categoryColor}; background-color: ${categoryColor};`}>
-                    <div class="category-text-color">{normalized.category}</div>
+            return (
+              <article class="post-card">
+                {imageSrc && (
+                  <a href={normalized.url} class="post-image-link">
+                    <img src={imageSrc} alt={normalized.title} class="post-img" loading="lazy" />
+                    <div class="category-tag" style={`--tag-color: ${categoryColor}`}>
+                      {categoryName}
+                    </div>
                   </a>
-                </li>
-              </ul>
-              <a href={normalized.url}>
-                <p class="excerpt">{normalized.excerpt}</p>
-              </a>
-              <a class="btn btn-outline-primary" href={normalized.url}>
-                {SITE_INFO.recentPosts.readMore}
-              </a>
-            </div>
-          </article>
-        );
-      })}
+                )}
+
+                <div class="post-content">
+                  <div class="post-meta">
+                    <span class="meta-item">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                      {normalized.readingTime}{SITE_INFO.posts.readingTime}
+                    </span>
+                    <span class="meta-item">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                      {normalized.dateLong}
+                    </span>
+                  </div>
+
+                  <a href={normalized.url} class="post-title-link">
+                    <h3 class="post-title">{normalized.title}</h3>
+                  </a>
+
+                  <p class="post-excerpt">{normalized.excerpt}</p>
+
+                  <a href={normalized.url} class="read-more-btn">
+                    {SITE_INFO.recentPosts.readMore}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                  </a>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* 2. 사이드바 영역 (넓은 버전 적용) */}
+      <Sidebar isWide={true} />
     </div>
-    <SidebarWide />
   </div>
 </section>
+
+<style is:inline>
+  .recent-posts-section { padding: 4rem 0; background-color: #fff; }
+  
+  .section-header { margin-bottom: 2.5rem; display: flex; align-items: center; gap: 15px; }
+  .section-title { font-size: 1.8rem; font-weight: 800; color: #222; margin: 0; }
+  .title-line { flex: 1; height: 1px; background: #eee; }
+
+  .posts-grid { display: flex; flex-direction: column; gap: 3rem; }
+
+  /* 카드 디자인 */
+  .post-card { 
+    display: flex; 
+    flex-direction: column; 
+    background: #fff; 
+    border-radius: 16px; 
+    overflow: hidden; 
+    transition: all 0.3s ease;
+  }
+
+  .post-image-link { position: relative; display: block; overflow: hidden; border-radius: 16px; }
+  .post-img { width: 100%; height: 400px; object-fit: cover; transition: transform 0.5s ease; }
+  .post-card:hover .post-img { transform: scale(1.03); }
+
+  .category-tag {
+    position: absolute; top: 20px; left: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #333; padding: 6px 15px; border-radius: 50px;
+    font-size: 0.85rem; font-weight: 700;
+    border-left: 4px solid var(--tag-color);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  .post-content { padding: 1.5rem 0.5rem; }
+  
+  .post-meta { display: flex; gap: 20px; margin-bottom: 1rem; color: #888; font-size: 0.85rem; }
+  .meta-item { display: flex; align-items: center; gap: 6px; }
+
+  .post-title { font-size: 1.8rem; font-weight: 800; color: #111; margin-bottom: 1rem; line-height: 1.3; transition: color 0.2s; }
+  .post-title:hover { color: #007bff; }
+  .post-title-link { text-decoration: none; }
+
+  .post-excerpt { color: #666; font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+  .read-more-btn { 
+    display: inline-flex; align-items: center; gap: 8px;
+    color: #111; font-weight: 700; text-decoration: none;
+    font-size: 0.95rem; transition: gap 0.2s;
+  }
+  .read-more-btn:hover { gap: 12px; color: #007bff; }
+
+  @media (max-width: 991px) {
+    .post-img { height: 250px; }
+    .post-title { font-size: 1.5rem; }
+  }
+</style>
