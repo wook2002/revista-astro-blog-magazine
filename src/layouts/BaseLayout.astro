@@ -43,6 +43,9 @@ const pageUrl = `${siteMetadata.url}${Astro.url.pathname}`;
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     
     <title>{pageTitle}</title>
+    // 검색 금지
+    <meta name="robots" content="noindex, nofollow" />
+
     <meta name="description" content={pageDescription} />
     <meta name="image" content={pageImage} />
     
