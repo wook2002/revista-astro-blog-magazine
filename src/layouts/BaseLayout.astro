@@ -43,8 +43,9 @@ const pageUrl = `${siteMetadata.url}${Astro.url.pathname}`;
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     
     <title>{pageTitle}</title>
-    // 검색 금지
+    {/* 검색 엔진 차단 (이건 Astro 주석이라 화면에 안 나옵니다) */}
     <meta name="robots" content="noindex, nofollow" />
+    <meta name="googlebot" content="noindex, nofollow" />
 
     <meta name="description" content={pageDescription} />
     <meta name="image" content={pageImage} />
