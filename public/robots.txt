@@ -1,4 +1,2 @@
 User-agent: *
 Disallow: /
-
-Sitemap: https://yourdomain.com/sitemap-index.xml
