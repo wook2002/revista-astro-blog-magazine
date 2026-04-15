@@ -45,19 +45,16 @@ const pageUrl = `${siteMetadata.url}${Astro.url.pathname}`;
     <meta name="description" content={pageDescription} />
     <meta name="image" content={pageImage} />
 
-    {/* ✅ [긴급 수술] 0.4초 깜빡임 방지용 CSS 핵 */}
+    {/* ✅ [FOUC 방어] CSS 로드 전 생 HTML 노출을 물리적으로 차단 */}
     <style is:inline>
-      /* 모든 로딩 애니메이션과 프리로더 강제 종료 */
+      /* 1. 시작하자마자 바디를 숨김 */
+      body { 
+        visibility: hidden; 
+        opacity: 0; 
+      }
+      /* 2. 기존 프리로더들은 미련 없이 제거 */
       #preloader, .preloader, .loader, #st-preloader { 
         display: none !important; 
-        visibility: hidden !important; 
-        opacity: 0 !important; 
-      }
-      /* 화면이 하얗게 떴다가 나타나는 현상 방지 */
-      body { 
-        opacity: 1 !important; 
-        visibility: visible !important; 
-        display: block !important;
       }
     </style>
     
@@ -89,5 +86,17 @@ const pageUrl = `${siteMetadata.url}${Astro.url.pathname}`;
       <slot />
     </main>
     <Footer />
+
+    {/* ✅ [FOUC 방어 스크립트] DOM이 로드된 후 0.01초 뒤에 화면을 짠! 하고 보여줌 */}
+    <script is:inline>
+      (function() {
+        window.addEventListener('DOMContentLoaded', () => {
+          setTimeout(() => {
+            document.body.style.visibility = 'visible';
+            document.body.style.opacity = '1';
+          }, 50); // 0.05초 정도의 찰나의 시간을 줘서 스타일이 안착하게 함
+        });
+      })();
+    </script>
   </body>
 </html>
