@@ -12,15 +12,15 @@ const finalHeart = heartImg?.src || "/heart.png";
 
 <header class="navbar-wrapper">
   <style is:inline>
-    /* 1. 기본 구조 및 최상단 고정 */
+    /* 1. 네비바 본체 - 투명하지 않게 흰색 배경 꽉 채우기 */
     .navbar-wrapper { 
       width: 100%; 
-      background: rgba(255, 255, 255, 0.95); 
-      backdrop-filter: blur(10px); /* 뒷배경 살짝 비치는 효과 */
-      border-bottom: 1px solid #f0f0f0; 
+      background-color: #ffffff; /* ✅ 확실한 흰색 배경 */
+      border-bottom: 1px solid #eeeeee; 
       position: sticky; 
       top: 0; 
       z-index: 1000; 
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* ✅ 은은한 그림자로 고급미 추가 */
     }
     .nav-center { 
       display: flex; 
@@ -28,89 +28,84 @@ const finalHeart = heartImg?.src || "/heart.png";
       justify-content: space-between; 
       max-width: 1200px; 
       margin: 0 auto; 
-      padding: 0.8rem 1.5rem; 
+      padding: 0.7rem 1.5rem; 
     }
     .nav-header { display: flex; align-items: center; gap: 12px; }
-    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; transition: opacity 0.2s; }
-    .nav-logo:hover { opacity: 0.8; }
-    .logo-text { display: flex; flex-direction: column; line-height: 1.1; }
-    .nav-word-open { color: #2d3436; font-weight: 800; font-size: 1.4rem; letter-spacing: -0.5px; }
-    .nav-word-ed { color: #636e72; font-size: 1.1rem; }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-text { display: flex; flex-direction: column; line-height: 1; }
+    .nav-word-open { color: #222; font-weight: 800; font-size: 1.4rem; letter-spacing: -0.5px; }
+    .nav-word-ed { color: #666; font-size: 1.1rem; }
 
-    /* 2. 데스크탑 메뉴 */
+    /* 2. 데스크탑 메뉴 디자인 */
     .nav-links { display: flex; list-style: none; gap: 2.5rem; margin: 0; padding: 0; }
     .nav-links li::before { content: none !important; }
     .page-link { 
       text-decoration: none; 
-      color: #2d3436; 
+      color: #333; 
       font-weight: 600; 
       font-size: 1rem; 
-      transition: all 0.2s ease;
-      position: relative;
+      transition: color 0.2s;
     }
-    .page-link:hover { color: #0984e3; }
+    .page-link:hover { color: #007bff; }
     
-    /* 3. 우측 버튼 그룹 */
+    /* 3. 우측 버튼 (가족 소개) */
     .nav-right { display: flex; align-items: center; gap: 1.2rem; }
     .support-us-link { 
       display: flex; 
       align-items: center; 
       gap: 8px; 
       text-decoration: none; 
-      color: #d63031; 
+      color: #ff4d6d; 
       font-weight: 700; 
-      padding: 10px 20px; 
+      padding: 9px 18px; 
       border-radius: 50px; 
-      background: #fff5f5; 
-      transition: all 0.3s ease;
-      border: 1px solid transparent;
+      background: #fff0f3; 
+      transition: all 0.2s;
     }
-    .support-us-link:hover { background: #fab1a0; color: #fff; transform: translateY(-2px); }
+    .support-us-link:hover { background: #ff4d6d; color: #fff; transform: translateY(-1px); }
     
-    /* 4. 토글 버튼 (마우스 손가락 추가) */
+    /* 4. 햄버거 버튼 */
     .toggle-btn { 
       display: none; 
       background: none; 
       border: none; 
-      cursor: pointer; /* ✅ 마우스 손가락 모양 */
-      padding: 8px;
-      color: #2d3436;
-      transition: transform 0.2s;
+      cursor: pointer; 
+      padding: 5px;
+      color: #333;
     }
-    .toggle-btn:hover { transform: scale(1.1); }
 
-    /* 5. 모바일 사이드바 (애니메이션 입히기) */
+    /* 5. 모바일 사이드바 - 배경 확실히 흰색으로! */
     #mobile-menu-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.4); 
+      position: fixed; inset: 0; background: rgba(0,0,0,0.5); 
       z-index: 1100; opacity: 0; visibility: hidden; 
-      transition: all 0.4s ease; backdrop-filter: blur(2px);
+      transition: opacity 0.3s ease;
     }
     #mobile-menu-aside {
-      position: fixed; top: 0; right: 0; width: 300px; height: 100%; 
-      background: white; z-index: 1200; padding: 2.5rem;
-      transform: translateX(100%); /* 처음엔 오른쪽 밖에 숨김 */
-      transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); /* 부드러운 가속도 */
-      box-shadow: -10px 0 30px rgba(0,0,0,0.05);
+      position: fixed; top: 0; right: 0; width: 280px; height: 100%; 
+      background-color: #ffffff !important; /* ✅ 사이드바 배경도 꽉 찬 흰색 */
+      z-index: 1200; padding: 2rem;
+      transform: translateX(100%); 
+      transition: transform 0.3s ease-out;
+      box-shadow: -5px 0 20px rgba(0,0,0,0.1);
     }
-    /* 메뉴 열렸을 때 상태 */
+    
+    /* 활성화 상태 */
     .menu-active #mobile-menu-overlay { opacity: 1; visibility: visible; }
     .menu-active #mobile-menu-aside { transform: translateX(0); }
 
-    /* 사이드바 내부 디자인 */
+    /* 사이드바 내부 닫기 버튼(X) */
     #menu-close { 
-      position: absolute; top: 25px; right: 25px; 
+      display: block;
+      margin-left: auto;
       border: none; background: none; font-size: 2rem; 
-      cursor: pointer; color: #636e72; transition: color 0.2s;
+      cursor: pointer; color: #333; line-height: 1;
     }
-    #menu-close:hover { color: #d63031; }
-    .sidebar-links { list-style: none; padding: 0; margin-top: 4rem; }
-    .sidebar-links li { margin-bottom: 1.8rem; border-bottom: 1px solid #f8f9fa; padding-bottom: 0.8rem; }
+    .sidebar-links { list-style: none; padding: 0; margin-top: 3rem; }
+    .sidebar-links li { margin-bottom: 1.5rem; }
     .sidebar-links a { 
-      text-decoration: none; color: #2d3436; 
-      font-size: 1.25rem; font-weight: 700; display: block;
-      transition: padding-left 0.2s;
+      text-decoration: none; color: #222; 
+      font-size: 1.3rem; font-weight: 700; display: block;
     }
-    .sidebar-links a:hover { padding-left: 10px; color: #0984e3; }
 
     @media (max-width: 991px) {
       .nav-links, .support-us-link { display: none; }
@@ -141,7 +136,7 @@ const finalHeart = heartImg?.src || "/heart.png";
           <img src={finalHeart} alt="" width="20" height="20" />
           {navButton.text}
         </a>
-        <button class="toggle-btn" id="menu-toggle" aria-label="메뉴 열기">
+        <button class="toggle-btn" id="menu-toggle">
           <svg viewBox="0 0 512 512" height="32" width="32" fill="currentColor"><path d="M32 96v64h448V96H32zm0 128v64h448v-64H32zm0 128v64h448v-64H32z"></path></svg>
         </button>
       </div>
@@ -150,13 +145,13 @@ const finalHeart = heartImg?.src || "/heart.png";
 
   <div id="mobile-menu-overlay"></div>
   <aside id="mobile-menu-aside">
-    <button id="menu-close" aria-label="메뉴 닫기">✕</button>
+    <button id="menu-close">✕</button>
     <ul class="sidebar-links">
       {navLinks.map((link) => (
         <li><a href={link.url}>{link.text}</a></li>
       ))}
-      <li style="border: none; margin-top: 3rem;">
-        <a href={navButton.url} style="color: #d63031;">{navButton.text}</a>
+      <li style="margin-top: 2rem; border-top: 1px solid #eee; padding-top: 1.5rem;">
+        <a href={navButton.url} style="color: #ff4d6d;">{navButton.text}</a>
       </li>
     </ul>
   </aside>
