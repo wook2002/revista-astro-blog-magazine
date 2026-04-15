@@ -2,7 +2,7 @@ export const SITE_INFO = {
   // 1. 브라우저 탭 및 검색 엔진 설정 (SEO)
   metadata: {
     title: "심로그 (Simlog)",
-    tagline: "일상.", // ✅ 심플하게 변경
+    tagline: "블로그.", // ✅ 심플하게 변경
     description: "기록의 가치를 담는 재욱의 개인 블로그입니다.",
     favicon: "/favicon.ico", 
     ogImage: "/logo.png",      
@@ -29,7 +29,7 @@ export const SITE_INFO = {
   // 4. 메인 화면 구성 (Hero & 알림)
   hero: {
     eyebrow: "기록.", // ✅ 두 글자로 통일
-    titleMain: "일상.", // ✅ 재욱님 픽!
+    titleMain: "블로그.", // ✅ 재욱님 픽!
     titleSub: "",      // ✅ 서브 타이틀은 비워둬서 난잡함 제거
     description: "배우고 기록하는 일들을 담아냅니다.", 
   },
