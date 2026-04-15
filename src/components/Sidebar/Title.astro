@@ -1,6 +1,5 @@
 ---
-import '../../css/components/sidebar/_sidebar-title.scss';
-
+// [src/components/Sidebar/Title.astro]
 interface Props {
   title: string;
 }
@@ -9,6 +8,34 @@ const { title } = Astro.props;
 ---
 
 <div class="sidebar-title-wrapper">
-  <h4>{title}</h4>
-  <div class="line"></div>
+  <h4 class="sidebar-title">{title}</h4>
+  <div class="accent-line"></div>
 </div>
+
+<style is:inline>
+  .sidebar-title-wrapper {
+    margin-bottom: 1.2rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .sidebar-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #2d3436;
+    margin: 0;
+    text-transform: uppercase; /* ✅ 영어일 경우 대문자로, 한글은 그대로 */
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  .accent-line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(to right, #007bff, #f0f0f0); /* ✅ 네비바 포인트 컬러와 매칭 */
+    border-radius: 2px;
+    opacity: 0.6;
+  }
+</style>
