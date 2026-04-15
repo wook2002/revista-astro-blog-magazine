@@ -1,14 +1,10 @@
 ---
-import About from './About.astro';
-import Partners from './Partners.astro';
-import SidebarCategories from './SidebarCategories.astro';
-import '../../css/components/sidebar/_sidebar.scss';
+// props로 넓은 버전인지 아닌지 받기
+const { isWide = false } = Astro.props;
+const columnClass = isWide ? "col-lg-4 col-12" : "col-xl-3 col-12";
 ---
 
-<div class="col-xl-3 col-12">
+<div class={columnClass}>
   <aside class="sidebar-styles">
-    <About />
-    <Partners />
-    <SidebarCategories />
-  </aside>
+    <slot /> </aside>
 </div>
