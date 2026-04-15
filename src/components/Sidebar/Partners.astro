@@ -1,15 +1,21 @@
 ---
+// [src/components/Sidebar/Partners.astro]
 import { Image } from 'astro:assets';
 import Title from './Title.astro';
 import SidebarCard from './SidebarCard.astro';
-import logo from '../../assets/logo.png';
-import '../../css/components/sidebar/_sidebar-partners.scss';
+import logo from '../../assets/logo.png'; // 기본 로고 (이미지 없을 때 대비)
+import { SITE_INFO } from '../../constants/siteConfig';
 
+// ✅ 파트너 데이터 (나중에 SITE_INFO로 옮겨도 좋습니다)
 const partners = [
   {
-    name: 'Other site',
-    logo: '',
-    logoAlt: 'Logo for other site',
+    name: '추천 사이트 1',
+    logoAlt: 'partner logo',
+    url: 'https://example.com',
+  },
+  {
+    name: '유용한 도구',
+    logoAlt: 'tool logo',
     url: 'https://example.com',
   },
 ];
@@ -17,21 +23,99 @@ const partners = [
 
 <SidebarCard>
   <div class="partners-wrapper">
-    <Title title="Our Partners" />
-    <p>Building an open internet together.</p>
-    {partners.map((partner) => (
-      <div key={partner.name} class="partner">
-        <Image
-          src={logo}
-          alt={partner.logoAlt || 'partner logo'}
-          class="partner-img"
-          width={35}
-          height={35}
-        />
-        <a target="_blank" rel="noopener noreferrer" class="partner-name" href={partner.url}>
-          {partner.name}
+    <Title title="함께하는 곳" />
+    <p class="partners-desc">더 나은 웹 생태계를 함께 만들어갑니다.</p>
+    
+    <div class="partner-list">
+      {partners.map((partner) => (
+        <a 
+          href={partner.url} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="partner-item"
+        >
+          <div class="img-box">
+            <Image
+              src={logo} 
+              alt={partner.logoAlt}
+              width={30}
+              height={30}
+            />
+          </div>
+          <span class="partner-name">{partner.name}</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="external-icon">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
         </a>
-      </div>
-    ))}
+      ))}
+    </div>
   </div>
 </SidebarCard>
+
+<style is:inline>
+  .partners-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .partners-desc {
+    font-size: 0.85rem;
+    color: #636e72;
+    line-height: 1.5;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .partner-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .partner-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+  }
+
+  .partner-item:hover {
+    background-color: #fff;
+    border-color: #007bff;
+    transform: translateX(5px); /* ✅ 오른쪽으로 살짝 밀리는 효과 */
+    box-shadow: 2px 4px 12px rgba(0,0,0,0.05);
+  }
+
+  .img-box {
+    background: #fff;
+    padding: 4px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #eee;
+  }
+
+  .partner-name {
+    flex: 1;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #2d3436;
+  }
+
+  .external-icon {
+    color: #b2bec3;
+    transition: color 0.2s;
+  }
+
+  .partner-item:hover .external-icon {
+    color: #007bff;
+  }
+</style>
