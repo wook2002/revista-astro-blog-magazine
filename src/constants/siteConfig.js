@@ -46,7 +46,7 @@ export const SITE_INFO = {
   recentPosts: {
     title: "최근 기록", // ✅ '게시물'보다 '기록'이 더 느낌 있네요
     readMore: "더 보기",
-    count: 3, 
+    count: 6, 
   },
   featured: {
     topTitle: "추천 포스트",
