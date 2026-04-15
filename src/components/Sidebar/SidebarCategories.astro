@@ -1,13 +1,31 @@
 ---
+// [src/components/Sidebar/SidebarCategories.astro]
 import CategoriesDistinct from '../CategoriesDistinct.astro';
 import Title from './Title.astro';
 import SidebarCard from './SidebarCard.astro';
-import '../../css/components/sidebar/_sidebar-categories.scss';
+import { SITE_INFO } from '../../constants/siteConfig';
+
+// SITE_INFO에 설정한 카테고리 한글 제목을 가져옵니다.
+const categoryTitle = "카테고리"; // 또는 SITE_INFO.sidebar.categories 등으로 동적 관리 가능
 ---
 
 <SidebarCard>
   <div class="sidebar-categories-wrapper">
-    <Title title="categories" />
-    <CategoriesDistinct />
+    <Title title={categoryTitle} />
+    <div class="category-list-container">
+      <CategoriesDistinct />
+    </div>
   </div>
 </SidebarCard>
+
+<style is:inline>
+  .sidebar-categories-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  /* 카테고리 리스트 사이의 간격 조정 */
+  .category-list-container {
+    margin-top: 0.5rem;
+  }
+</style>
