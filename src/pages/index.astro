@@ -1,23 +1,20 @@
 ---
+// [src/pages/index.astro]
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import Featured from '../components/featured/Featured.astro';
-import Notification from '../components/Notification.astro';
 import RecentPosts from '../components/RecentPosts.astro';
 import { getAllPosts } from '../utils/getPosts';
-// 1. 설정 파일 불러오기
 import { SITE_INFO } from '../constants/siteConfig';
 
+// 1. 모든 포스트 가져오기
 const allPosts = await getAllPosts();
+
+// 2. 날짜순 정렬
 const sortedPosts = allPosts.sort((a, b) => {
   return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
 });
 
-const topPickPosts = sortedPosts.filter(post => post.data.topPick);
-const trendingPosts = sortedPosts.filter(post => post.data.trending);
-const popularPosts = sortedPosts.filter(post => post.data.popular);
-
-// 2. 보여줄 포스트 개수를 설정 파일에서 가져오기
+// 3. 최근 포스트만 슬라이스 (개수는 siteConfig에서 관리)
 const recentPosts = sortedPosts.slice(0, SITE_INFO.recentPosts.count);
 ---
 
@@ -25,12 +22,20 @@ const recentPosts = sortedPosts.slice(0, SITE_INFO.recentPosts.count);
   title={`${SITE_INFO.metadata.title} | ${SITE_INFO.metadata.tagline}`}
   description={SITE_INFO.metadata.description}
 >
+  {/* 1. 브랜드 정체성을 보여주는 히로 섹션 */}
   <Hero />
-  <Featured 
-    topPickPosts={topPickPosts}
-    trendingPosts={trendingPosts}
-    popularPosts={popularPosts}
-  />
-  <Notification />
-  <RecentPosts posts={recentPosts} />
+
+  {/* 2. 덕지덕지 붙어있던 Featured, Notification 삭제! */}
+  {/* 오직 '최근 기록'에만 집중하게 만듭니다. */}
+  <main class="main-content">
+    <RecentPosts posts={recentPosts} />
+  </main>
 </BaseLayout>
+
+<style is:inline>
+  .main-content {
+    /* 히로와 글 목록 사이의 숨통을 틔워줍니다. */
+    padding-top: 2rem;
+    min-height: 60vh;
+  }
+</style>
