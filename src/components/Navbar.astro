@@ -1,28 +1,24 @@
 ---
 // [src/components/Navbar.astro]
 import { SITE_INFO } from '../constants/siteConfig';
-// import logo from '../assets/logo.png';
-// import heart from '../assets/heart.png';
 
+// ✅ 모든 변수 선언은 반드시 이 '---' 안에 있어야 합니다!
 const { navLinks, title, navButton } = SITE_INFO;
----
 
-// 경로를 직접 변수에 담습니다 (public 폴더 기준)
+// 이미지 경로 설정 (public 폴더에 이미지가 있다면 아래 경로가 맞습니다)
 const logoSrc = "/logo.png"; 
 const heartSrc = "/heart.png";
+---
 
 <header class="navbar-wrapper">
-  {/* ✅ 중요: 스타일을 인라인으로 포함시켜 0.001초의 깜빡임도 차단 */}
   <style is:inline>
-    .navbar-wrapper { width: 100%; background: #fff; }
+    .navbar-wrapper { width: 100%; background: #fff; border-bottom: 1px solid #eee; }
     .nav-center { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; padding: 1rem; }
     .nav-links { display: flex; list-style: none; gap: 2rem; margin: 0; padding: 0; }
     .nav-links li { margin: 0; }
-    /* 아까 스샷에 보이던 '점'들을 여기서 미리 없애버립니다 */
     .nav-links li::before { content: none !important; } 
     .page-link { text-decoration: none; color: #333; font-weight: 500; }
     
-    /* 모바일에서는 일단 숨김 (깜빡임 방지) */
     @media (max-width: 991px) {
       .nav-links { display: none; }
     }
@@ -31,15 +27,16 @@ const heartSrc = "/heart.png";
   <nav class="navbar">
     <div class="nav-center">
       <div class="nav-header">
-        <a href="/" class="nav-logo not-blue">
-          <img src={logo.src} alt="로고" width="100" height="100" />
+        <a href="/" class="nav-logo not-blue" style="display: flex; align-items: center; gap: 10px;">
+          {/* ✅ logo.src 대신 위에서 선언한 logoSrc를 사용합니다 */}
+          <img src={logoSrc} alt="로고" width="100" height="100" />
           <div class="logo-text">
-            <span class="nav-word-open">{title.main}</span>
-            <span class="nav-word-ed">{title.sub}</span>
+            <span class="nav-word-open" style="font-weight: bold; font-size: 1.5rem;">{title.main}</span>
+            <span class="nav-word-ed" style="font-size: 1.5rem;">{title.sub}</span>
           </div>
         </a>
-        <button class="toggle-btn" id="menu-toggle">
-          <svg viewBox="0 0 512 512" height="1em" width="1em"><path d="M32 96v64h448V96H32zm0 128v64h448v-64H32zm0 128v64h448v-64H32z"></path></svg>
+        <button class="toggle-btn" id="menu-toggle" style="background: none; border: none; cursor: pointer;">
+          <svg viewBox="0 0 512 512" height="2em" width="2em"><path d="M32 96v64h448V96H32zm0 128v64h448v-64H32zm0 128v64h448v-64H32z"></path></svg>
         </button>
       </div>
 
@@ -49,14 +46,16 @@ const heartSrc = "/heart.png";
         ))}
       </ul>
 
-      <a class="support-us-link not-blue" href={navButton.url}>
-        <img src={heart.src} alt="" class="support-heart" width="19" height="19" />
+      <a class="support-us-link not-blue" href={navButton.url} style="display: flex; align-items: center; gap: 5px;">
+        {/* ✅ heart.src 대신 heartSrc를 사용합니다 */}
+        <img src={heartSrc} alt="" class="support-heart" width="19" height="19" />
         {navButton.text}
       </a>
     </div>
   </nav>
 
-  <aside class="mobile-menu" id="mobile-menu">
+  {/* 모바일 사이드바 (필요시 스타일 추가) */}
+  <aside class="mobile-menu" id="mobile-menu" style="display: none;">
     <div class="sidebar-container">
       <button class="close-btn" id="menu-close">✕</button>
       <ul class="sidebar-links">
@@ -73,6 +72,10 @@ const heartSrc = "/heart.png";
   const closeBtn = document.getElementById('menu-close');
   const mobileMenu = document.getElementById('mobile-menu');
 
-  toggleBtn?.addEventListener('click', () => mobileMenu?.classList.add('show-sidebar'));
-  closeBtn?.addEventListener('click', () => mobileMenu?.classList.remove('show-sidebar'));
+  toggleBtn?.addEventListener('click', () => {
+    if (mobileMenu) mobileMenu.style.display = 'block';
+  });
+  closeBtn?.addEventListener('click', () => {
+    if (mobileMenu) mobileMenu.style.display = 'none';
+  });
 </script>
