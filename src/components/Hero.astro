@@ -1,38 +1,39 @@
 ---
+// [src/components/Hero.astro]
 import slugify from 'slugify';
 import { categories } from '../utils/heroCategories';
 import { SITE_INFO } from '../constants/siteConfig';
+
+// 카테고리 한글 변환 도우미
+const translateCategory = (cat: string) => SITE_INFO.categoryMapping[cat] || cat;
 ---
 
 <header class="hero-wrapper">
-  <div class="hero">
-    <div class="row">
-      <div class="col-lg-7 col-12 hero-text">
-        <h4>{SITE_INFO.hero.eyebrow}</h4>
-        <h1>
-          <span>{SITE_INFO.hero.titleMain}</span>
-          <br /> {SITE_INFO.hero.titleSub}
+  <div class="hero-container">
+    <div class="hero-content">
+      {/* 1. 텍스트 섹션: 담백하게 핵심만 */}
+      <div class="text-side">
+        <p class="eyebrow">{SITE_INFO.hero.eyebrow}</p>
+        <h1 class="main-title">
+          <span class="highlight">{SITE_INFO.hero.titleMain}</span>
+          <br />
+          <span class="sub-title">{SITE_INFO.hero.titleSub}</span>
         </h1>
-        <p>{SITE_INFO.hero.description}</p>
+        <p class="description">{SITE_INFO.hero.description}</p>
       </div>
-      <div class="col-lg-5 col-12">
-        <div class="hero-categories">
+
+      {/* 2. 카테고리 섹션: '난잡한 빛' 제거하고 깔끔한 태그로 */}
+      <div class="category-side">
+        <div class="category-grid">
           {categories.map((category, index, arr) => {
             const isLast = arr.length - 1 === index;
             const href = isLast ? '/categories' : `/${slugify(category.category).toLowerCase()}`;
-            const styleString = `box-shadow: 0 0 40px; background-color: ${category.color}; color: ${category.color};`;
+            const koreanName = translateCategory(category.category);
             
             return (
-              <a
-                style={styleString}
-                class="hero-category"
-                href={href}
-              >
-                <div class="overlay">
-                  <div class="category-text-color">
-                    {category.category}
-                  </div>
-                </div>
+              <a href={href} class="category-pill" style={`--accent-color: ${category.color}`}>
+                <span class="dot"></span>
+                <span class="name">{koreanName}</span>
               </a>
             );
           })}
@@ -42,25 +43,113 @@ import { SITE_INFO } from '../constants/siteConfig';
   </div>
 </header>
 
-<style>
-  .hero-wrapper { border-bottom: 1px solid var(--primary-1); }
-  .hero { display: flex; padding: 6rem 0; align-items: center; justify-content: center; max-width: 83vw; margin: 0 auto; }
-  @media only screen and (min-width: 1600px) { .hero { max-width: 75vw; } }
-  .row { align-items: center; }
-  .hero-text { padding-right: 3rem; }
-  .hero h1 { line-height: 5rem; }
-  .hero h1 span { display: inline-block; position: relative; font-size: 110%; }
-  .hero h1 span::after { position: absolute; content: ''; background-color: #ace7ff; width: 100%; height: 15px; left: 0; bottom: 11px; z-index: -1; }
-  .hero h4 { color: var(--grey-8); margin-bottom: 1.5rem; text-transform: uppercase; font-size: 17px; }
-  .hero p { font-size: 20px; }
-  .category-text-color { color: var(--grey-6); }
-  .hero-category { padding: 0rem 2rem; line-height: 60px; margin: 25px 25px 0 0; border-radius: 10px; color: #3a3838; min-width: 80px; display: inline-block; transition: all 0.1s linear; }
-  .hero-category:hover { filter: brightness(103%); transition: all 0.1s linear; }
-  .hero-category:hover > .overlay { width: 100%; height: 100%; opacity: 0.95; transition-duration: 0.2s; }
-  @media only screen and (max-width: 460px) { .hero-categories { text-align: center; } }
-  @media only screen and (max-width: 1147px) { .hero-category { font-size: 90%; } }
-  @media only screen and (max-width: 1092px) { .hero-category { padding: 0 1.2rem; } }
-  @media only screen and (max-width: 991px) { .hero-categories { text-align: center; } }
-  @media only screen and (max-width: 502px) { .hero-category, .hero h4, .hero h1, .hero p { text-align: center; } .hero-text { padding: 0; } }
-  @media only screen and (max-width: 358px) { .hero h1 { font-size: 2.6rem; } }
+<style is:inline>
+  .hero-wrapper {
+    background-color: #ffffff;
+    padding: 6rem 0;
+    border-bottom: 1px solid #f5f5f5;
+  }
+
+  .hero-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .hero-content {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  /* 왼쪽 텍스트 디자인 */
+  .eyebrow {
+    color: #007bff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+  }
+
+  .main-title {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    font-weight: 800;
+    color: #2d3436;
+    margin-bottom: 1.5rem;
+  }
+
+  .highlight {
+    color: #111;
+  }
+
+  .sub-title {
+    color: #636e72;
+    font-weight: 600;
+  }
+
+  .description {
+    font-size: 1.2rem;
+    color: #636e72;
+    line-height: 1.6;
+    max-width: 500px;
+  }
+
+  /* 오른쪽 카테고리 디자인 - 난잡함 해결 */
+  .category-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .category-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: #ffffff;
+    border: 1px solid #eee;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .category-pill .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+  }
+
+  .category-pill .name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #444;
+  }
+
+  .category-pill:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  }
+
+  /* 반응형 */
+  @media (max-width: 991px) {
+    .hero-content {
+      grid-template-columns: 1fr;
+      text-align: center;
+      gap: 3rem;
+    }
+    .description {
+      margin: 0 auto;
+    }
+    .category-grid {
+      justify-content: center;
+    }
+    .main-title {
+      font-size: 2.5rem;
+    }
+  }
 </style>
