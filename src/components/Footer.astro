@@ -5,19 +5,18 @@ import SocialLinks from '../constants/socialLinks'
 import logo from '../assets/logo.png'
 import { SITE_INFO } from '../constants/siteConfig';
 
-// ✅ 연도를 수동으로 안 바꿔도 되게 올해 연도를 가져옵니다.
 const currentYear = new Date().getFullYear();
 ---
 
 <footer class="footer-wrapper">
   <div class="footer-container">
-    {/* 1. 상단 섹션: 로고 및 설명 */}
+    {/* 1. 브랜드 & 로고 섹션 */}
     <div class="footer-brand">
       <a href="/" class="footer-logo-link">
         <Image
           class="footer-logo"
           src={logo}
-          alt={`${SITE_INFO.title.main}${SITE_INFO.title.sub} 로고`}
+          alt="로고"
           width={40}
           height={40}
         />
@@ -29,25 +28,24 @@ const currentYear = new Date().getFullYear();
       <p class="footer-tagline">{SITE_INFO.metadata.tagline}</p>
     </div>
 
-    {/* 2. 중단 섹션: 소셜 링크 및 정책 링크 */}
+    {/* 2. 링크 섹션 (소셜 & 정책) */}
     <div class="footer-nav">
-      <div class="social-box">
-        <SocialLinks client:load styleClass="footer-social-icons" />
+      <div class="social-wrapper">
+        <SocialLinks client:load styleClass="footer-icons" />
       </div>
-      
-      <div class="policy-links">
+      <div class="legal-links">
         <a href="/privacy-policy">{SITE_INFO.footer.privacyPolicy}</a>
-        <span class="divider">|</span>
+        <span class="dot">·</span>
         <a href="/terms-and-conditions">{SITE_INFO.footer.termsAndConditions}</a>
       </div>
     </div>
 
-    {/* 3. 하단 섹션: 저작권 표시 */}
+    {/* 3. 저작권 표시 */}
     <div class="footer-bottom">
       <p class="copyright">
         &copy; {SITE_INFO.footer.startYear} - {currentYear} 
         <strong>{SITE_INFO.footer.copyrightHolder}</strong>. 
-        {SITE_INFO.footer.allRightsReserved}
+        All Rights Reserved.
       </p>
     </div>
   </div>
@@ -56,10 +54,10 @@ const currentYear = new Date().getFullYear();
 <style is:inline>
   .footer-wrapper {
     width: 100%;
-    background-color: #ffffff;
+    background-color: #ffffff; /* ✅ 검은색 치우고 깨끗한 흰색으로! */
     border-top: 1px solid #f0f0f0;
-    padding: 3rem 0 2rem 0;
-    margin-top: 5rem;
+    padding: 4rem 0 2rem 0;
+    margin-top: 6rem;
   }
 
   .footer-container {
@@ -69,67 +67,68 @@ const currentYear = new Date().getFullYear();
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: 2.5rem;
   }
 
-  /* 브랜드 섹션 */
   .footer-logo-link {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     text-decoration: none;
-    margin-bottom: 0.5rem;
+    justify-content: center;
   }
-  .brand-main { color: #222; font-weight: 800; font-size: 1.2rem; }
-  .brand-sub { color: #666; font-size: 1rem; }
-  .footer-tagline { color: #888; font-size: 0.9rem; margin: 0; }
 
-  /* 네비게이션 및 소셜 */
+  .brand-main { color: #111; font-weight: 800; font-size: 1.3rem; }
+  .brand-sub { color: #888; font-size: 1.1rem; }
+  .footer-tagline { color: #999; font-size: 0.9rem; margin-top: 0.5rem; text-align: center; }
+
   .footer-nav {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
-    width: 100%;
+    gap: 1.2rem;
   }
 
-  .social-box {
-    padding: 0.5rem 0;
-  }
-
-  .policy-links {
+  /* 소셜 아이콘 스타일 */
+  .footer-icons {
     display: flex;
-    align-items: center;
-    gap: 15px;
-    font-size: 0.85rem;
+    gap: 1.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
-  .policy-links a {
+
+  .legal-links {
+    display: flex;
+    gap: 10px;
+    font-size: 0.85rem;
+    color: #666;
+  }
+
+  .legal-links a {
     color: #666;
     text-decoration: none;
     transition: color 0.2s;
   }
-  .policy-links a:hover { color: #007bff; }
-  .divider { color: #eee; }
 
-  /* 하단 저작권 */
+  .legal-links a:hover { color: #007bff; }
+
   .footer-bottom {
     width: 100%;
     text-align: center;
-    padding-top: 1.5rem;
-    border-top: 1px solid #f9f9f9;
+    padding-top: 2rem;
+    border-top: 1px solid #f8f8f8;
   }
+
   .copyright {
-    color: #999;
+    color: #bbb;
     font-size: 0.8rem;
-    letter-spacing: 0.3px;
     margin: 0;
   }
-  .copyright strong { color: #666; }
 
-  /* 반응형 조절 */
+  .copyright strong { color: #888; }
+
   @media (max-width: 767px) {
-    .footer-wrapper { padding: 2.5rem 0 1.5rem 0; }
-    .policy-links { flex-direction: column; gap: 8px; }
-    .divider { display: none; }
+    .footer-wrapper { padding: 3rem 0 1.5rem 0; }
   }
 </style>
