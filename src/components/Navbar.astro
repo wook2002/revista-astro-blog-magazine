@@ -1,11 +1,15 @@
 ---
 // [src/components/Navbar.astro]
 import { SITE_INFO } from '../constants/siteConfig';
-import logo from '../assets/logo.png';
-import heart from '../assets/heart.png';
+// import logo from '../assets/logo.png';
+// import heart from '../assets/heart.png';
 
 const { navLinks, title, navButton } = SITE_INFO;
 ---
+
+// 경로를 직접 변수에 담습니다 (public 폴더 기준)
+const logoSrc = "/logo.png"; 
+const heartSrc = "/heart.png";
 
 <header class="navbar-wrapper">
   {/* ✅ 중요: 스타일을 인라인으로 포함시켜 0.001초의 깜빡임도 차단 */}
