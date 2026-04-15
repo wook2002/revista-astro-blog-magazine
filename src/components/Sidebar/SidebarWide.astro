@@ -1,14 +1,27 @@
 ---
+// [src/components/Sidebar/Sidebar.astro]
 import About from './About.astro';
 import Partners from './Partners.astro';
 import SidebarCategories from './SidebarCategories.astro';
 import '../../css/components/sidebar/_sidebar.scss';
 ---
 
-<div class="col-lg-4 col-12">
+<div class="col-xl-3 col-12">
   <aside class="sidebar-styles">
-    <About />
-    <Partners />
-    <SidebarCategories />
+    <div class="sidebar-inner">
+      <About />
+      <Partners />
+      <SidebarCategories />
+    </div>
   </aside>
 </div>
+
+<style is:inline>
+  .sidebar-styles {
+    padding-top: 3.4rem; /* ✅ 본문 제목 높이와 맞춤 */
+  }
+  .sidebar-inner {
+    position: sticky;
+    top: 100px; /* ✅ 네비바 아래에 딱 붙어서 따라오게 설정 */
+  }
+</style>
