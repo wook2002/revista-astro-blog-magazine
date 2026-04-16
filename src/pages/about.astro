@@ -1,15 +1,27 @@
 ---
+// [src/pages/about.astro]
 import BaseLayout from '../layouts/BaseLayout.astro';
 import AboutUs from '../components/About/AboutUs.astro';
-import Vision from '../components/About/Vision.astro';
-import Network from '../components/About/Network.astro';
+import { SITE_INFO } from '../constants/siteConfig';
+
+// ✅ 만약 Vision이나 Network 섹션이 너무 기업 같아서 보기 싫다면 
+// 아래에서 해당 컴포넌트를 지워버리면 됩니다.
 ---
 
 <BaseLayout 
-  title="About Us | Revista"
-  description="Revista is a platform for passionate people to share knowledge. We are open source and believe in free learning."
+  title={`소개 | ${SITE_INFO.metadata.title}`}
+  description={SITE_INFO.about.shortBio}
 >
-  <AboutUs />
-  <Vision />
-  <Network />
+  <main class="about-page">
+    <AboutUs />
+    
+    {/* 💡 개인 블로그라면 Vision, Network는 과할 수 있습니다. 
+        필요 없다고 느껴지면 아래 줄들을 지우거나 주석 처리하세요. */}
+    {/* <Vision /> */}
+    {/* <Network /> */}
+  </main>
 </BaseLayout>
+
+<style is:inline>
+  .about-page { padding-bottom: 5rem; }
+</style>
