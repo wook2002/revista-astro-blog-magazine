@@ -1,70 +1,115 @@
 ---
-import { AiOutlineDeploymentUnit, AiOutlineRead } from 'react-icons/ai';
+// [src/components/About/AboutUs.astro]
+import { SITE_INFO } from '../../constants/siteConfig';
 ---
 
-<section class="about-us-wrapper">
+<section class="about-us-section">
   <div class="container">
-    <h1 class="section-title about-us-title">Our Story</h1>
-    <div class="row">
-      <div class="col-lg-7">
-        <div class="about-card">
-          <AiOutlineRead class="icon" client:load />
-          <h3>Humble Beginnings</h3>
-          <p>
-            Flannel fixie tilde gastropub actually. La croix everyday carry hot chicken shaman snackwave. Godard art party hexagon hot chicken franzen woke. 8-bit VHS hoodie heirloom, YOLO poutine scenester cloud bread kombucha next level truffaut mustache bruh polaroid kale chips. Small batch PBR&B trust fund ethical before they sold out. Master cleanse sustainable locavore vinyl prism squid single-origin coffee.
-          </p>
-        </div>
+    <header class="about-header">
+      <h1 class="about-main-title">소개.</h1>
+      <div class="title-accent"></div>
+    </header>
+
+    <div class="about-grid">
+      {/* 첫 번째 카드: 블로그의 시작 */}
+      <div class="about-card shadow-sm">
+        <div class="card-icon">🖋️</div>
+        <h3 class="card-title">시작.</h3>
+        <p class="card-text">
+          {SITE_INFO.about.title} <br /><br />
+          거창한 이유보다는 평범한 하루 속에서 놓치기 싫은 생각들을 모으기 위해 시작했습니다. 
+          나만의 속도로 기록을 쌓아가는 즐거움을 이 공간에 담으려 합니다.
+        </p>
       </div>
-      <div class="col-lg-5">
-        <div class="about-card">
-          <AiOutlineDeploymentUnit class="icon" client:load />
-          <h3>Access to Resources</h3>
-          <p>
-            Adaptogen skateboard schlitz viral edison bulb knausgaard shabby chic drinking vinegar semiotics cred occupy. Fit roof party ugh fanny pack ascot. Blog messenger bag you probably haven't heard of them distillery, vexillologist offal brunch leggings gentrify sustainable mumblecore pok pok polaroid pour-over big mood. 
-          </p>
-        </div>
+
+      {/* 두 번째 카드: 블로그의 방향 */}
+      <div class="about-card shadow-sm">
+        <div class="card-icon">🎯</div>
+        <h3 class="card-title">지향.</h3>
+        <p class="card-text">
+          {SITE_INFO.about.shortBio} <br /><br />
+          {SITE_INFO.hero.description} <br />
+          지식의 공유뿐만 아니라, 시간이 흐른 뒤 돌아봤을 때 부끄럽지 않은 단단한 기록들을 남기는 것이 목표입니다.
+        </p>
       </div>
     </div>
   </div>
 </section>
 
-<style>
-  .about-us-wrapper {
-    margin: 5rem 0;
+<style is:inline>
+  .about-us-section {
+    padding: 6rem 0;
+    background-color: #fff;
   }
 
-  .about-us-wrapper .about-us-title {
-    margin-bottom: 4rem;
-    font-size: 180%;
+  .about-header {
+    text-align: center;
+    margin-bottom: 5rem;
   }
 
-  .about-us-wrapper .about-card {
-    background-color: #fafafa;
-    padding: 40px;
-    border-radius: 5px;
-    min-height: 464px;
+  .about-main-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #111;
+    margin-bottom: 1.5rem;
   }
 
-  .about-us-wrapper .icon {
-    background-color: var(--card-icon-bg);
-    padding: 1rem;
-    border-radius: 0.8rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 7px 25px #b6eaffb4;
-    font-size: 1em;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+  .title-accent {
+    width: 40px;
+    height: 4px;
+    background: #007bff;
+    margin: 0 auto;
+    border-radius: 2px;
   }
 
-  .about-us-wrapper .icon svg {
-    width: 1em;
-    height: 1em;
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
   }
 
-  @media screen and (max-width: 767px) {
-    .about-us-wrapper .about-card {
-      margin-bottom: 1rem;
+  .about-card {
+    background: #fdfdfd;
+    padding: 3.5rem 2.5rem;
+    border-radius: 24px;
+    border: 1px solid #f0f0f0;
+    transition: all 0.3s ease;
+  }
+
+  .about-card:hover {
+    transform: translateY(-10px);
+    border-color: #007bff;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+  }
+
+  .card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #222;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    word-break: keep-all;
+  }
+
+  @media (max-width: 991px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+    .about-main-title {
+      font-size: 2.5rem;
+    }
+    .about-card {
+      padding: 2.5rem 1.5rem;
     }
   }
 </style>
