@@ -4,7 +4,6 @@ import '../css/bootstrap-grid.min.css';
 import '../css/pages.scss';
 import '../css/components.scss';
 
-// ✅ 1. React용 NavbarWrapper 대신, 새로 만든 순수 Astro Navbar를 가져옵니다.
 import Navbar from '../components/Navbar.astro'; 
 import Footer from '../components/Footer.astro';
 import { SITE_INFO } from '../constants/siteConfig';
@@ -24,7 +23,6 @@ const siteMetadata = {
   description: SITE_INFO.metadata.description,
   url: import.meta.env.SITE || 'https://simlog.pages.dev', 
   defaultImage: SITE_INFO.metadata.ogImage,
-  twitterUsername: '',
 };
 
 const pageTitle = title || `${siteMetadata.title} | ${SITE_INFO.metadata.tagline}`;
@@ -42,14 +40,8 @@ const pageUrl = `${siteMetadata.url}${Astro.url.pathname}`;
     
     <title>{pageTitle}</title>
 
-    {/* 검색 엔진 차단 설정 */}
     <meta name="robots" content="noindex, nofollow" />
-    <meta name="googlebot" content="noindex, nofollow" />
-
     <meta name="description" content={pageDescription} />
-    <meta name="image" content={pageImage} />
-
-    {/* 💡 [삭제 완료] 아까 넣었던 <style is:inline> (body { visibility: hidden }) 코드는 이제 필요 없습니다. */}
     
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -64,24 +56,51 @@ const pageUrl = `${siteMetadata.url}${Astro.url.pathname}`;
     <meta property="og:url" content={pageUrl} />
     <meta property="og:type" content={article ? 'article' : 'website'} />
     <meta property="og:site_name" content={siteMetadata.title} />
-    <meta property="og:locale" content="ko_KR" />
     
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={pageDescription} />
-    <meta name="twitter:image" content={pageImage} />
     
     <link rel="canonical" href={pageUrl} />
+
+    {structuredData && (
+      <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
+    )}
   </head>
   <body>
-    {/* ✅ 2. 0.1초의 지연도 없는 순수 HTML 네비게이션을 호출합니다. */}
     <Navbar /> 
     
     <main>
       <slot />
     </main>
-    <Footer />
 
-    {/* 💡 [삭제 완료] 하단에 있었던 setTimeout 관련 <script is:inline> 코드도 이제 필요 없습니다. */}
+    <Footer />
   </body>
+
+  {/* ✅ 전역 스타일은 맨 아래에! */}
+  <style is:global>
+    :root {
+      /* '--sim-' 접두어를 붙여 부트스트랩과 충돌 방지 (디자인 토큰) */
+      --sim-max-width: 1200px;
+      --sim-gap: 1.5rem;
+    }
+
+    /* 부트스트랩의 .container 대신 사용할 '심로그 전용 컨테이너'
+       !important 없이도 우선순위를 가질 수 있도록 독자적인 클래스로 정의합니다.
+    */
+    .sim-container {
+      width: 100%;
+      max-width: var(--sim-max-width);
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: var(--sim-gap);
+      padding-right: var(--sim-gap);
+    }
+
+    /* 슬롯(Slot) 내부에 들어오는 이미지들이 튀어나가지 않게 기본 방어 */
+    main img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
 </html>
