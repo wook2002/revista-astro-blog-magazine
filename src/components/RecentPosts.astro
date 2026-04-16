@@ -9,8 +9,8 @@ const { posts = [] } = Astro.props;
 ---
 
 <section class="recent-posts-section">
-  {/* ✅ container 대신 simlog-center를 씁니다 */}
-  <div class="simlog-center">
+  {/* ✅ 순수 부트스트랩 container 적용 */}
+  <div class="container">
     <div class="row">
       <div class="col-lg-8 col-12">
         <div class="section-header">
@@ -46,12 +46,19 @@ const { posts = [] } = Astro.props;
 </section>
 
 <style is:inline>
-  .recent-posts-section { padding: 4rem 0; background-color: #fff; }
+  .recent-posts-section { padding: 4rem 0; background-color: #fff; width: 100%; }
   .section-header { margin-bottom: 2.5rem; display: flex; align-items: center; gap: 15px; }
-  .section-title { font-size: 1.8rem; font-weight: 800; color: #222; }
+  .section-title { font-size: 1.8rem; font-weight: 800; color: #222; margin: 0; }
   .title-line { flex: 1; height: 1px; background: #eee; }
   .posts-grid { display: flex; flex-direction: column; gap: 4rem; }
-  .post-img { width: 100%; height: 400px; object-fit: cover; border-radius: 16px; }
-  .post-title { font-size: 1.8rem; font-weight: 800; color: #111; margin: 1rem 0; }
-  .post-excerpt { color: #666; font-size: 1.05rem; line-height: 1.7; }
+  .post-card { display: flex; flex-direction: column; }
+  .post-image-link { position: relative; border-radius: 16px; overflow: hidden; display: block; }
+  .post-img { width: 100%; height: 400px; object-fit: cover; transition: transform 0.3s ease; }
+  .post-card:hover .post-img { transform: scale(1.03); }
+  .category-tag { position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.95); color: #333; padding: 6px 15px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; border-left: 4px solid var(--tag-color); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+  .post-content { padding: 1.5rem 0; }
+  .post-meta { display: flex; gap: 20px; margin-bottom: 1rem; color: #888; font-size: 0.85rem; }
+  .post-title { font-size: 1.8rem; font-weight: 800; color: #111; margin-bottom: 1rem; line-height: 1.3; }
+  .post-excerpt { color: #666; font-size: 1.05rem; line-height: 1.7; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  @media (max-width: 991px) { .post-img { height: 250px; } .post-title { font-size: 1.5rem; } }
 </style>
