@@ -42,5 +42,19 @@ const pageUrl = `${siteMetadata.url}${Astro.url.pathname}`;
     <Navbar /> 
     <main><slot /></main>
     <Footer />
+
+    {/* ✅ AI의 깔쌈한 해결책: 부트스트랩의 기본 container 너비를 명품 블로그 사이즈(1080px)로 재정의합니다. */}
+    <style is:global>
+      @media (min-width: 1200px) {
+        .container {
+          max-width: 1080px !important;
+        }
+      }
+      /* 슬롯 내부 이미지 튀어나감 방지 */
+      main img {
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
   </body>
 </html>
