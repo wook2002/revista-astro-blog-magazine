@@ -14,7 +14,8 @@ const { posts = [] } = Astro.props;
 ---
 
 <section class="recent-posts-section">
-  <div class="container custom-container">
+  {/* ✅ 부트스트랩 .container 대신 우리가 정의한 .sim-container를 사용합니다. */}
+  <div class="sim-container">
     <div class="row">
       <div class="col-lg-8 col-12">
         <div class="section-header">
@@ -50,7 +51,9 @@ const { posts = [] } = Astro.props;
                       {normalized.dateLong}
                     </span>
                   </div>
-                  <a href={normalized.url} class="post-title-link"><h3 class="post-title">{normalized.title}</h3></a>
+                  <a href={normalized.url} class="post-title-link">
+                    <h3 class="post-title">{normalized.title}</h3>
+                  </a>
                   <p class="post-excerpt">{normalized.excerpt}</p>
                   <a href={normalized.url} class="read-more-btn">
                     {SITE_INFO.recentPosts.readMore}
@@ -62,30 +65,42 @@ const { posts = [] } = Astro.props;
           })}
         </div>
       </div>
+
+      {/* 사이드바 영역 */}
       <Sidebar isWide={true} />
     </div>
   </div>
 </section>
 
 <style is:inline>
-  .recent-posts-section { padding: 4rem 0; background-color: #fff; }
-  
-  /* ✅ 전체 너비 고정 및 중앙 정렬 */
-  .custom-container {
-    max-width: 1200px !important;
-    margin: 0 auto !important;
+  .recent-posts-section { 
+    padding: 4rem 0; 
+    background-color: #fff; 
   }
+  
+  /* ✅ 불필요한 .custom-container { max-width: 1200px !important } 스타일을 완전히 제거했습니다. 
+     이제 .sim-container 클래스가 전역 규칙에 따라 너비를 조절합니다. */
 
   .section-header { margin-bottom: 2.5rem; display: flex; align-items: center; gap: 15px; }
   .section-title { font-size: 1.8rem; font-weight: 800; color: #222; margin: 0; }
   .title-line { flex: 1; height: 1px; background: #eee; }
+  
   .posts-grid { display: flex; flex-direction: column; gap: 4rem; }
 
   .post-card { display: flex; flex-direction: column; background: #fff; border-radius: 16px; overflow: hidden; }
   .post-image-link { position: relative; display: block; overflow: hidden; border-radius: 16px; }
   .post-img { width: 100%; height: 400px; object-fit: cover; transition: transform 0.5s ease; }
   .post-card:hover .post-img { transform: scale(1.03); }
-  .category-tag { position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.95); color: #333; padding: 6px 15px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; border-left: 4px solid var(--tag-color); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+
+  .category-tag { 
+    position: absolute; top: 20px; left: 20px; 
+    background: rgba(255,255,255,0.95); 
+    color: #333; padding: 6px 15px; border-radius: 50px; 
+    font-size: 0.85rem; font-weight: 700; 
+    border-left: 4px solid var(--tag-color); 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+  }
+
   .post-content { padding: 1.5rem 0.5rem; }
   .post-meta { display: flex; gap: 20px; margin-bottom: 1rem; color: #888; font-size: 0.85rem; }
   .meta-item { display: flex; align-items: center; gap: 6px; }
@@ -93,5 +108,8 @@ const { posts = [] } = Astro.props;
   .post-excerpt { color: #666; font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   .read-more-btn { display: inline-flex; align-items: center; gap: 8px; color: #111; font-weight: 700; text-decoration: none; font-size: 0.95rem; }
 
-  @media (max-width: 991px) { .post-img { height: 250px; } .post-title { font-size: 1.5rem; } }
+  @media (max-width: 991px) { 
+    .post-img { height: 250px; } 
+    .post-title { font-size: 1.5rem; } 
+  }
 </style>
