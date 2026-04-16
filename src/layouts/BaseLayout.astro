@@ -31,41 +31,34 @@ const pageUrl = `${siteMetadata.url}${Astro.url.pathname}`;
     <title>{pageTitle}</title>
     <meta name="robots" content="noindex, nofollow" />
     <meta name="description" content={pageDescription} />
-    
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;700;800&display=swap" rel="stylesheet" />
-    
     <meta property="og:title" content={pageTitle} />
-    <meta property="og:type" content={article ? 'article' : 'website'} />
     <meta property="og:image" content={pageImage} />
-    <meta property="og:url" content={pageUrl} />
-
-    {structuredData && (
-      <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
-    )}
+    {structuredData && <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />}
   </head>
   <body>
     <Navbar /> 
     <main><slot /></main>
     <Footer />
 
-    {/* ✅ 깔쌈한 정렬의 핵심: 전역 컨테이너 정의 */}
+    {/* ✅ 모든 섹션을 중앙으로 모으는 절대 규칙 */}
     <style is:global>
       :root {
         --sim-max-width: 1200px;
         --sim-gap: 1.5rem;
       }
 
-      /* 부트스트랩을 이기기 위해 body를 앞에 붙여 우선순위를 높였습니다 (!important 대체) */
-      body .sim-container {
-        width: 100%;
-        max-width: var(--sim-max-width);
-        margin-left: auto;
-        margin-right: auto;
-        padding-left: var(--sim-gap);
-        padding-right: var(--sim-gap);
-        display: block; /* 확실하게 블록 요소로 지정 */
+      /* 'simlog-center'라는 세상에 하나뿐인 이름을 씁니다. */
+      .simlog-center {
+        width: 100% !important;
+        max-width: var(--sim-max-width) !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: var(--sim-gap) !important;
+        padding-right: var(--sim-gap) !important;
+        display: block !important;
       }
     </style>
   </body>
