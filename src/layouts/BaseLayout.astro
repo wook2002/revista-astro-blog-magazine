@@ -42,24 +42,5 @@ const pageUrl = `${siteMetadata.url}${Astro.url.pathname}`;
     <Navbar /> 
     <main><slot /></main>
     <Footer />
-
-    {/* ✅ 모든 섹션을 중앙으로 모으는 절대 규칙 */}
-    <style is:global>
-      :root {
-        --sim-max-width: 1200px;
-        --sim-gap: 1.5rem;
-      }
-
-      /* 'simlog-center'라는 세상에 하나뿐인 이름을 씁니다. */
-      .simlog-center {
-        width: 100% !important;
-        max-width: var(--sim-max-width) !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-        padding-left: var(--sim-gap) !important;
-        padding-right: var(--sim-gap) !important;
-        display: block !important;
-      }
-    </style>
   </body>
 </html>
