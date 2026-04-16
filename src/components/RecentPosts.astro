@@ -9,14 +9,16 @@ const { posts = [] } = Astro.props;
 ---
 
 <section class="recent-posts-section">
-  {/* ✅ 순수 부트스트랩 container 적용 */}
   <div class="container">
     <div class="row">
-      <div class="col-lg-8 col-12">
+      
+      {/* ✅ 좌측 8칸: 오른쪽에 여백(pr-lg-5)을 줘서 사이드바와 답답하게 붙지 않게 합니다. */}
+      <div class="col-lg-8 col-12 custom-post-area">
         <div class="section-header">
           <h2 class="section-title">{SITE_INFO.recentPosts.title}</h2>
           <div class="title-line"></div>
         </div>
+        
         <div class="posts-grid">
           {posts.map(post => {
             const normalized = normalizePostData(post);
@@ -27,7 +29,7 @@ const { posts = [] } = Astro.props;
                 {imageSrc && (
                   <a href={normalized.url} class="post-image-link">
                     <img src={imageSrc} alt={normalized.title} class="post-img" loading="lazy" />
-                    <div class="category-tag" style={`--tag-color: ${categoryColor}`}>{normalized.category}</div>
+                    <div class="category-tag" style={`--tag-color: ${categoryColor}`}>{SITE_INFO.categoryMapping[normalized.category] || normalized.category}</div>
                   </a>
                 )}
                 <div class="post-content">
@@ -40,25 +42,36 @@ const { posts = [] } = Astro.props;
           })}
         </div>
       </div>
+      
+      {/* 우측 4칸: 사이드바 */}
       <Sidebar isWide={true} />
+    
     </div>
   </div>
 </section>
 
 <style is:inline>
   .recent-posts-section { padding: 4rem 0; background-color: #fff; width: 100%; }
+  
+  /* 데스크탑에서 글 목록과 사이드바 사이의 간격 확보 */
+  @media (min-width: 992px) {
+    .custom-post-area { padding-right: 3rem; }
+  }
+
   .section-header { margin-bottom: 2.5rem; display: flex; align-items: center; gap: 15px; }
   .section-title { font-size: 1.8rem; font-weight: 800; color: #222; margin: 0; }
   .title-line { flex: 1; height: 1px; background: #eee; }
   .posts-grid { display: flex; flex-direction: column; gap: 4rem; }
+  
   .post-card { display: flex; flex-direction: column; }
   .post-image-link { position: relative; border-radius: 16px; overflow: hidden; display: block; }
-  .post-img { width: 100%; height: 400px; object-fit: cover; transition: transform 0.3s ease; }
+  .post-img { width: 100%; height: 380px; object-fit: cover; transition: transform 0.4s ease; }
   .post-card:hover .post-img { transform: scale(1.03); }
+  
   .category-tag { position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.95); color: #333; padding: 6px 15px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; border-left: 4px solid var(--tag-color); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+  
   .post-content { padding: 1.5rem 0; }
   .post-meta { display: flex; gap: 20px; margin-bottom: 1rem; color: #888; font-size: 0.85rem; }
   .post-title { font-size: 1.8rem; font-weight: 800; color: #111; margin-bottom: 1rem; line-height: 1.3; }
   .post-excerpt { color: #666; font-size: 1.05rem; line-height: 1.7; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-  @media (max-width: 991px) { .post-img { height: 250px; } .post-title { font-size: 1.5rem; } }
 </style>
