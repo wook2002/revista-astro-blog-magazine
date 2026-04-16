@@ -4,6 +4,10 @@ import '../css/bootstrap-grid.min.css';
 import '../css/pages.scss';
 import '../css/components.scss';
 
+/* ✅ 방금 만든 1대장 파일을 가장 마지막에 불러옵니다. 
+   그래야 위의 찌꺼기 CSS들을 자연스럽게 덮어씁니다. */
+import '../css/simlog.css'; 
+
 import Navbar from '../components/Navbar.astro'; 
 import Footer from '../components/Footer.astro';
 import { SITE_INFO } from '../constants/siteConfig';
@@ -38,23 +42,12 @@ const pageUrl = `${siteMetadata.url}${Astro.url.pathname}`;
     <meta property="og:image" content={pageImage} />
     {structuredData && <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />}
   </head>
+  
+  {/* 기존에 있던 지저분한 ID(#simlog-absolute-wrapper)나 <style is:global>은 
+      이제 simlog.css가 다 처리하므로 완전히 삭제했습니다. 진짜 깔끔해졌죠? */}
   <body>
     <Navbar /> 
     <main><slot /></main>
     <Footer />
-
-    {/* ✅ AI의 깔쌈한 해결책: 부트스트랩의 기본 container 너비를 명품 블로그 사이즈(1080px)로 재정의합니다. */}
-    <style is:global>
-      @media (min-width: 1200px) {
-        .container {
-          max-width: 1080px !important;
-        }
-      }
-      /* 슬롯 내부 이미지 튀어나감 방지 */
-      main img {
-        max-width: 100%;
-        height: auto;
-      }
-    </style>
   </body>
 </html>
