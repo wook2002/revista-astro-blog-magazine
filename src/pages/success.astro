@@ -1,45 +1,34 @@
 ---
+// [src/pages/success.astro]
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_INFO } from '../constants/siteConfig';
 ---
 
 <BaseLayout 
-  title="Success | Revista"
-  description="Thank you for contacting us"
+  title={`전송 완료 | ${SITE_INFO.metadata.title}`}
+  description={SITE_INFO.contact.successMsg}
 >
-  <section class="success-wrapper success-page">
+  <section class="success-page">
     <div class="page-center">
-      <h2 class="received">Thank you for contacting us, we have received your submission! </h2>
-      <a href="/" class="btn btn-outline-primary">
-        back home
+      <div class="icon-box">
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#007bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+      </div>
+      <h2 class="message">{SITE_INFO.contact.successMsg}</h2>
+      <a href="/" class="back-home-btn">
+        홈으로 돌아가기
       </a>
     </div>
   </section>
 </BaseLayout>
 
-<style>
-  .success-wrapper.success-page {
-    background: white;
+<style is:inline>
+  .success-page { background: #fff; min-height: 60vh; display: flex; align-items: center; }
+  .page-center { margin: 0 auto; text-align: center; padding: 2rem; }
+  .icon-box { margin-bottom: 2rem; }
+  .message { font-size: 1.8rem; font-weight: 800; color: #222; margin-bottom: 3rem; word-break: keep-all; }
+  .back-home-btn { 
+    display: inline-block; padding: 12px 30px; background: #222; color: #fff; 
+    text-decoration: none; border-radius: 50px; font-weight: 700; transition: all 0.2s;
   }
-
-  .success-wrapper .page-center {
-    margin: 30vh auto;
-    text-align: center;
-  }
-  
-  .success-wrapper .received {
-    margin-bottom: 3.5rem !important;
-  }
-
-  @media screen and (max-width: 980px) {
-    .success-wrapper .page-center {
-      margin: 10vh auto;
-      text-align: center;
-    }
-  }
-
-  @media screen and (max-width: 590px) {
-    .success-wrapper .received {
-      font-size: 1.5rem;
-    }
-  }
+  .back-home-btn:hover { background: #007bff; transform: translateY(-2px); }
 </style>
