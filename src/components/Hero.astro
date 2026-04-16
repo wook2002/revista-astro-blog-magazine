@@ -2,13 +2,11 @@
 import slugify from 'slugify';
 import { categories } from '../utils/heroCategories';
 import { SITE_INFO } from '../constants/siteConfig';
-
-const translateCategory = (cat: string) => SITE_INFO.categoryMapping[cat] || cat;
 ---
 
 <header class="hero-wrapper">
-  {/* ✅ BaseLayout에서 정의한 sim-container 하나만 씁니다 */}
-  <div class="sim-container">
+  {/* ✅ 이름을 simlog-center로 정확히 바꿨습니다 */}
+  <div class="simlog-center">
     <div class="hero-content">
       <div class="text-side">
         <p class="eyebrow">{SITE_INFO.hero.eyebrow}</p>
@@ -19,19 +17,14 @@ const translateCategory = (cat: string) => SITE_INFO.categoryMapping[cat] || cat
         </h1>
         <p class="description">{SITE_INFO.hero.description}</p>
       </div>
-
       <div class="category-side">
         <div class="category-grid">
-          {categories.map((category, index, arr) => {
-            const isLast = arr.length - 1 === index;
-            const href = isLast ? '/categories' : `/${slugify(category.category).toLowerCase()}`;
-            return (
-              <a href={href} class="category-pill" style={`--accent-color: ${category.color}`}>
-                <span class="dot"></span>
-                <span class="name">{translateCategory(category.category)}</span>
-              </a>
-            );
-          })}
+          {categories.map((category) => (
+            <a href={`/${slugify(category.category).toLowerCase()}`} class="category-pill" style={`--accent-color: ${category.color}`}>
+              <span class="dot"></span>
+              <span class="name">{SITE_INFO.categoryMapping[category.category] || category.category}</span>
+            </a>
+          ))}
         </div>
       </div>
     </div>
@@ -39,26 +32,13 @@ const translateCategory = (cat: string) => SITE_INFO.categoryMapping[cat] || cat
 </header>
 
 <style is:inline>
-  .hero-wrapper { background-color: #ffffff; padding: 6rem 0 4rem; border-bottom: 1px solid #f5f5f5; width: 100%; }
-  
-  /* ✅ 이제 여기엔 너비(max-width)나 마진(margin) 관련 코드가 일절 없습니다. */
-  .hero-content {
-    display: grid;
-    grid-template-columns: 1.6fr 0.9fr; 
-    gap: 4rem;
-    align-items: center;
-  }
-
+  .hero-wrapper { background-color: #fff; padding: 6rem 0 4rem; border-bottom: 1px solid #f5f5f5; }
+  .hero-content { display: grid; grid-template-columns: 1.6fr 0.9fr; gap: 4rem; align-items: center; }
   .eyebrow { color: #007bff; font-weight: 700; font-size: 0.9rem; margin-bottom: 1rem; }
   .main-title { font-size: 3.5rem; line-height: 1.1; font-weight: 800; color: #111; margin-bottom: 1.5rem; }
-  .description { font-size: 1.2rem; color: #636e72; line-height: 1.6; max-width: 500px; }
+  .description { font-size: 1.2rem; color: #636e72; line-height: 1.6; }
   .category-grid { display: flex; flex-wrap: wrap; gap: 12px; }
-  .category-pill { display: flex; align-items: center; gap: 8px; padding: 10px 20px; background: #fff; border: 1px solid #eee; border-radius: 50px; text-decoration: none; }
+  .category-pill { display: flex; align-items: center; gap: 8px; padding: 10px 20px; border: 1px solid #eee; border-radius: 50px; text-decoration: none; }
   .category-pill .dot { width: 8px; height: 8px; border-radius: 50%; background-color: var(--accent-color); }
-  .category-pill .name { font-size: 0.95rem; font-weight: 600; color: #444; }
-
-  @media (max-width: 991px) {
-    .hero-content { grid-template-columns: 1fr; text-align: center; }
-    .category-grid { justify-content: center; }
-  }
+  @media (max-width: 991px) { .hero-content { grid-template-columns: 1fr; text-align: center; } .category-grid { justify-content: center; } }
 </style>
