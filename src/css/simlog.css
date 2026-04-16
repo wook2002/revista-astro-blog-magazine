@@ -1,0 +1,34 @@
+/* [src/css/simlog.css]
+  이 파일은 기존 템플릿(Revista)의 모든 레이아웃 찌꺼기를 덮어쓰고,
+  Simlog만의 깔끔한 1080px 중앙 정렬을 강제하는 '1대장' 파일입니다.
+*/
+
+:root {
+  --simlog-max-width: 1080px;
+  --simlog-padding: 1.5rem;
+}
+
+/* body 태그를 붙여서 CSS 우선순위를 자연스럽게 높였습니다.
+  이렇게 하면 !important 같은 하드코딩 없이도 기존 템플릿의 억지 CSS를 우아하게 이길 수 있습니다.
+*/
+body .container {
+  width: 100%;
+  max-width: var(--simlog-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--simlog-padding);
+  padding-right: var(--simlog-padding);
+}
+
+/* 화면이 아무리 커져도 최대 너비는 1080px로 고정 (초광각 모니터 방어) */
+@media (min-width: 1200px) {
+  body .container {
+    max-width: var(--simlog-max-width);
+  }
+}
+
+/* 본문 내부의 이미지가 레이아웃을 찢고 나가는 것 방지 */
+body main img {
+  max-width: 100%;
+  height: auto;
+}
